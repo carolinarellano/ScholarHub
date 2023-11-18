@@ -237,6 +237,60 @@
                     
             </div>
               <!--/ Layout Demo -->
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAgregarTarea">Agregar tarea</button>
+              </div>
+              <!-- Modal -->
+              <div class="modal fade" id="modalAgregarTarea" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">¿Qué es lo que tienes que hacer?</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form>
+                        <div class="form-group">
+                          <label for="nombreActividad">Nombre de la actividad</label>
+                          <input type="text" class="form-control" id="nombreActividad">
+                        </div>
+                        <div class="form-group">
+                          <label for="materia">Materia</label>
+                          <select class="form-control" id="materia">
+                            <option>Lenguajes Formales</option>
+                            <option>Desarroll de Aplicaciones y Servicios Web</option>
+                            <option>Organiación y Arquitectura de Computadoras</option>
+                            <option>Técnicas de Integración de Código</option>
+                            <option>Estrategias Algorítmicas</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="categoria">Categoria</label>
+                          <select class="form-control" id="categoria">
+                            <option>Tarea</option>
+                            <option>Examen</option>
+                            <option>Practica</option>
+                            <option>Proyecto</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="fechaEntrega">Fecha de entrega</label>
+                          <input type="date" class="form-control" id="fechaEntrega">
+                        </div>
+                        <div class="form-group">
+                          <label for="detallesExtra">Detalles extra</label>
+                          <textarea class="form-control" id="detallesExtra" rows="3"></textarea>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer justify-content-start">
+                      <button type="button" class="btn btn-success">Guardar</button>
+                      <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
             </div>
             <!-- / Content -->
             <div class="content-backdrop fade"></div>
