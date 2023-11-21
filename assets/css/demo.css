@@ -105,3 +105,36 @@
   text-align: center;
   margin-top: 1rem;
 }
+
+#materia{
+  position: relative;
+  cursor: pointer;
+  padding: 7px;
+  font-size: x-small;
+
+}
+
+#materiaInfo{
+  position: absolute;
+  left: 70px;
+  top: 0%;
+  transform: translate(-50%);
+  background-color: #000;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 7px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+#materiaInfo::before{
+  content:"";
+  position: absolute;
+  top: 50px;
+  transform: translateX(-50%);
+}
+#materia:hover #materiaInfo{
+  top:-110%;
+  visibility: visible;
+  opacity: 1;
+}
