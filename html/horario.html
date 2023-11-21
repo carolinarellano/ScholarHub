@@ -129,7 +129,6 @@
 
         <div class="layout-page">
           <!-- Navbar -->
-
           <nav
             class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
             id="layout-navbar"
@@ -156,12 +155,16 @@
               <!-- /Search -->
             </div>
           </nav>
-
-          <!-- / Navbar -->
+          <!-- /Navbar -->
+          
           <div class="content-wrapper">
             <div class="container-xxl flex-grow-1 container-p-y" >
                 <div class="col-lg-12 mb-4 order-0" style="margin: 10px;">
                     <h2 class="font-weight-bold text-center"><strong>Horario</strong></h2>
+                    <div class="align-items-end">
+                      <a href="#" class="btn-sm btn-secondary mt-3 text-center" data-bs-toggle="modal" data-bs-target="#editScheduleModal" style="width: 8rem; padding: 10px;">Editar horario</a>
+                    </div>
+                    <br>
                     <!-- Horario -->
                     <div class="card d-flex align-items-end row">
                             <div class="table-responsive text-nowrap">
@@ -189,7 +192,8 @@
                                         </span>
                                         <span>
                                           <a href="#"
-                                          class="btn btn-sm rounded-pill btn-primary">
+                                          class="btn btn-sm rounded-pill btn-primary"
+                                          data-bs-toggle="modal" data-bs-target="#modal5">
                                           Técnicas de integración de Código</a>
                                         </span>                                        
                                       </div>                   
@@ -207,7 +211,8 @@
                                         </span>
                                         <span>
                                           <a href="#"
-                                          class="btn btn-sm rounded-pill btn-warning">
+                                          class="btn btn-sm rounded-pill btn-warning"
+                                          data-bs-toggle="modal" data-bs-target="#modal3">
                                           Lenguajes Formales</a>
                                         </span>                                        
                                       </div>                              
@@ -220,7 +225,8 @@
                                         </span>
                                         <span>
                                           <a href="#"
-                                          class="btn btn-sm rounded-pill btn-success">
+                                          class="btn btn-sm rounded-pill btn-success"
+                                          data-bs-toggle="modal" data-bs-target="#modal2">
                                           Estrategias Algorítmicas</a>
                                         </span>                                        
                                       </div>
@@ -232,7 +238,8 @@
                                         </span>
                                         <span>
                                           <a href="#"
-                                          class="btn btn-sm rounded-pill btn-warning">
+                                          class="btn btn-sm rounded-pill btn-warning"
+                                          data-bs-toggle="modal" data-bs-target="#modal3">
                                           Lenguajes Formales</a>
                                         </span>                                        
                                       </div>
@@ -245,7 +252,8 @@
                                         </span>
                                         <span>
                                           <a href="#"
-                                          class="btn btn-sm rounded-pill btn-success">
+                                          class="btn btn-sm rounded-pill btn-success"
+                                          data-bs-toggle="modal" data-bs-target="#modal2">
                                           Estrategias Algorítmicas</a>
                                         </span>                                        
                                       </div>
@@ -263,7 +271,8 @@
                                         </span>
                                         <span>
                                           <a href="#"
-                                          class="btn btn-sm rounded-pill btn-info">
+                                          class="btn btn-sm rounded-pill btn-info"
+                                          data-bs-toggle="modal" data-bs-target="#modal1">
                                           Desarrollo de apps y servicios web</a>
                                         </span>                                        
                                       </div>
@@ -277,7 +286,8 @@
                                         </span>
                                         <span>
                                           <a href="#"
-                                          class="btn btn-sm rounded-pill btn-info">
+                                          class="btn btn-sm rounded-pill btn-info"
+                                          data-bs-toggle="modal" data-bs-target="#modal1">
                                           Desarrollo de apps y servicios web</a>
                                         </span>                                        
                                       </div>
@@ -311,7 +321,8 @@
                                         </span>
                                         <span>
                                           <a href="#"
-                                          class="btn btn-sm rounded-pill btn-danger">
+                                          class="btn btn-sm rounded-pill btn-danger"
+                                          data-bs-toggle="modal" data-bs-target="#modal4">
                                           Organización y arquitectura de computadoras</a>
                                         </span>                                        
                                       </div>
@@ -325,7 +336,8 @@
                                         </span>
                                         <span>
                                           <a href="#"
-                                          class="btn btn-sm rounded-pill btn-danger">
+                                          class="btn btn-sm rounded-pill btn-danger"
+                                          data-bs-toggle="modal" data-bs-target="#modal4">
                                           Organización y arquitectura de computadoras</a>
                                         </span>                                        
                                       </div>
@@ -349,6 +361,7 @@
                     <br>
 
                       <h2 class="mt-3 mb-3 text-center" id="materia_cards"><strong>Materias</strong></h2>
+                      <a href="#" class="btn-sm btn-secondary mt-3 text-center" data-bs-toggle="modal" data-bs-target="#agregarmateria" style="width: 8rem; padding: 10px;">Agregar Materia</a>
 
                     <div class="container row justify-content-around mx-auto" style="padding: 10px;">
                       <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5 justify-content-center">
@@ -413,7 +426,6 @@
                             </div>
                       </div>
                       </div>
-                      <a href="#" class="btn-sm btn-secondary mt-3 text-center" data-bs-toggle="modal" data-bs-target="#agregarmateria" style="width: 8rem;">Agregar Materia</a>
                     </div>
                     </div>
                 </div>
@@ -422,6 +434,73 @@
           </div>
         </div>
       </div>
+
+      <!--Editar horario-->
+      <div class="modal fade" id="editScheduleModal" tabindex="-1" role="dialog" aria-labelledby="editScheduleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editScheduleModalLabel">Editar Horario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form for editing schedule -->
+                    <form>
+                        <div class="form-group">
+                          <div class="mb-3">
+                            <label for="Materias" class="form-label">Materias</label>
+                            <select id="defaultSelect" class="form-select">
+                              <option>Selecciona la materia que deseas editar</option>
+                              <option value="1">Desarrollo de Aplicaciones y Servicios Web</option>
+                              <option value="2">Estrategias Algorítmicas</option>
+                              <option value="3">Lenguajes Formales</option>
+                              <option value="4">Organización y Arquitectura de Computadoras</option>
+                              <option value="5">Técnicas de Integración de Código</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="html5-time-input" class="col-md-2 col-form-label">Hora</label>
+                            <div class="col-md-4">
+                              <input class="form-control" type="time" value="9:30:00" id="html5-time-input" />
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                          <div class="col-md">
+                            <label for="Materias" class="form-label">Días</label><br>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" />
+                              <label class="form-check-label" for="inlineCheckbox1">Lunes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" />
+                              <label class="form-check-label" for="inlineCheckbox2">Martes</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option2" />
+                              <label class="form-check-label" for="inlineCheckbox3">Miércoles</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option2" />
+                              <label class="form-check-label" for="inlineCheckbox4">Jueves</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option2" />
+                              <label class="form-check-label" for="inlineCheckbox5">Viernes</label>
+                            </div>
+                          </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">Eliminar materia</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-sm btn-success">Guardar cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
       <!-- Modal materia 1 -->
     <div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -606,9 +685,9 @@
                       <br>
 
                       <!-- Botón para enviar el formulario -->
-                      <div class="modal-footer justify-content-start">
-                        <button type="submit" class="btn btn-success">Guardar materia</button>
-                        
+                      <div class="modal-footer justify-content-end">
+                        <button type="submit" class="btn btn-sm btn-success" href="horario.html" >Guardar materia</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal" aria-label="Close">Cancelar cambios</button>
                       </div>
                   </form>
               </div>
@@ -622,6 +701,7 @@
           <div class="modal-content">
               <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLabel">Editar Materia</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" href="horario.html"></button>
               </div>
               <div class="modal-body">
                 <p>Aquí podrás editar los detalles de cada una de tus materias</p>
@@ -653,9 +733,8 @@
                       <br>
 
                       <!-- Botón para enviar el formulario -->
-                      <div class="modal-footer justify-content-start">
-                        <button type="submit" class="btn btn-success">Guardar materia</button>
-                        <button type="button" class="btn btn-danger ms-auto" data-bs-dismiss="modal">Cerrar</button>
+                      <div class="modal-footer justify-content-end">
+                        <button type="submit" class="btn btn-sm btn-success" href="horario.html" >Guardar materia</button>
                       </div>
                   </form>
               </div>
