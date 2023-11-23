@@ -23,4 +23,4 @@ const materiaSchema = new Schema({
     }
 });
 
-module.exports = model('Materia', materiaSchema);
+module.exports = model('Materias', materiaSchema);
