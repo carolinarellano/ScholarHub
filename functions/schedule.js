@@ -57,10 +57,12 @@ document.getElementById('materiaForm').addEventListener('submit', function (even
     var creditos = document.getElementById('creditos').value;
 
     // Cierra el modal
-    $('#agregarmateria').modal('hidden');
+    $('#agregarmateria').modal('hide');
+
 
     // Limpia el formulario si es necesario
     document.getElementById('materiaForm').reset();
+
 });
 
 
