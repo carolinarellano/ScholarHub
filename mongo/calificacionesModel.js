@@ -1,18 +1,18 @@
 const { Schema, model } = require('mongoose');
 
 const calificacionSchema = new Schema({
-    nombre: {
-        type: String,
+    materia: {
+        type: Schema.Types.ObjectId,
+        ref: 'Materia',
         required: true
     },
     calificacion: {
         type: Number,
         required: true
     },
-    materia: {
-        type: Schema.Types.ObjectId,
-        ref: 'Materia',
-        required: true
+    descripcion: {
+        type: String,
+        required: false
     }
 });
 
