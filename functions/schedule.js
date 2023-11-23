@@ -1,11 +1,33 @@
 // Crear una materia
 // Generar un modal nuevo para editar materia
 
-function agregarMateria(nombre, periodo, creditos, btnColor, modalId) {
+function agregarMateria() {
+    let colores = [
+        'primary',
+        'secondary',
+        'success',
+        'danger',
+        'warning',
+        'info',
+    ]
+
+    const indiceAleatorio = Math.floor(Math.random() * colores.length);
+    let btnColor = colores[indiceAleatorio];
+
     // Crea una nueva tarjeta
     var nuevaMateria = document.createElement('div');
     nuevaMateria.className = 'card p-0';
     nuevaMateria.style.margin = '10px';
+
+    var nombre = document.getElementById('nombreMateria');
+    var periodo = document.getElementById('creditos');
+    var creditos = document.getElementById('porcentajes');
+    var porcentajes = document.getElementById('periodo');
+
+    var modalId = 'modal-' + nombre;
+    var modal = document.createElement('div');
+    modal.id = modalId;
+    modal.className = 'modal';
 
     nuevaMateria.innerHTML = `
       <div class="card-header">
@@ -22,10 +44,10 @@ function agregarMateria(nombre, periodo, creditos, btnColor, modalId) {
 
     // Agrega la nueva tarjeta al contenedor
     document.getElementById('container-materias').appendChild(nuevaMateria);
-  }
+}
 
-  // Manejador de eventos para el envío del formulario
-  document.getElementById('materiaForm').addEventListener('submit', function (event) {
+// Manejador de eventos para el envío del formulario
+document.getElementById('materiaForm').addEventListener('submit', function (event) {
     // Evita que el formulario se envíe de forma predeterminada
     event.preventDefault();
 
@@ -33,17 +55,13 @@ function agregarMateria(nombre, periodo, creditos, btnColor, modalId) {
     var nombre = document.getElementById('nombreMateria').value;
     var periodo = document.getElementById('periodo').value;
     var creditos = document.getElementById('creditos').value;
-    // Puedes agregar más campos según sea necesario
-
-    // Agrega la nueva materia al contenedor
-    agregarMateria(nombre, periodo, creditos, 'success', '#modal1');
 
     // Cierra el modal
-    $('#agregarmateria').modal('hide');
+    $('#agregarmateria').modal('hidden');
 
     // Limpia el formulario si es necesario
     document.getElementById('materiaForm').reset();
-  });
+});
 
 
 // Editar la materia seleccionada
@@ -53,24 +71,24 @@ function abrirModalEdicion(nombre, periodo, creditos, porcentajes) {
     document.getElementById('editarPeriodo').value = periodo;
     document.getElementById('editarCreditos').value = creditos;
     document.getElementById('editarPorcentajes').value = porcentajes;
-  
+
     // Abrir el modal de edición
     $('#editarMateria').modal('show');
-  }
-  
+}
+
 // Agrega un evento de clic a las tarjetas existentes para abrir el modal de edición
 document.getElementById('container-materias').addEventListener('click', function (event) {
-if (event.target.classList.contains('btn-editar-materia')) {
-    var card = event.target.closest('.card');
-    var nombre = card.querySelector('.card-title').textContent.trim();
-    var periodo = card.querySelector('.card-periodo').textContent.trim();
-    var creditos = card.querySelector('.card-creditos').textContent.trim();
-    var porcentajes = card.querySelector('.card-porcentajes').textContent.trim();
+    if (event.target.classList.contains('btn-editar-materia')) {
+        var card = event.target.closest('.card');
+        var nombre = card.querySelector('.card-title').textContent.trim();
+        var periodo = card.querySelector('.card-periodo').textContent.trim();
+        var creditos = card.querySelector('.card-creditos').textContent.trim();
+        var porcentajes = card.querySelector('.card-porcentajes').textContent.trim();
 
-    abrirModalEdicion(nombre, periodo, creditos, porcentajes);
-}
+        abrirModalEdicion(nombre, periodo, creditos, porcentajes);
+    }
 });
-  
+
 // Función para eliminar una materia
 
 function eliminarMateria(event) {
