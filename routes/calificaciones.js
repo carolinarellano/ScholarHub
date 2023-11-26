@@ -12,3 +12,5 @@ router.route('/calificaciones')
             res.status(500).send("No se puede acceder a la calificación solicitada");
         }
     });
+
+module.exports = router;

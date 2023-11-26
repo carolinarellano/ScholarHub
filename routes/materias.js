@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const materiaModel = require('../mongo/materiaModel');
+const materiaModel = require('../mongo/materiasModel');
 
 router.route('/horario')
     .get((req, res) => {
