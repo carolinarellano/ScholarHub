@@ -1,176 +1,153 @@
-// Crear una materia
-// Generar un modal nuevo para editar materia
+document.addEventListener('DOMContentLoaded', function () {
+    // Obtén el botón por su ID
+    var guardarMateriaBtn = document.getElementById('guardarMateriaBtn');
+
+    // Agrega un manejador de eventos al hacer clic en el botón
+    guardarMateriaBtn.addEventListener('click', function () {
+        agregarMateria();
+    });
+});
+
+
 
 function agregarMateria() {
-    let colores = [
-        'primary',
-        'secondary',
-        'success',
-        'danger',
-        'warning',
-        'info',
-    ]
-
+    const colores = ['primary', 'secondary', 'success', 'danger', 'warning', 'info'];
     const indiceAleatorio = Math.floor(Math.random() * colores.length);
-    let btnColor = colores[indiceAleatorio];
+    const btnColor = colores[indiceAleatorio];
 
-    // Crea una nueva tarjeta
-    var nuevaMateria = document.createElement('div');
+    const nombreInput = document.getElementById('nombreMateria');
+    const periodoInput = document.getElementById('periodo');
+    const creditosInput = document.getElementById('creditos');
+
+    const nombre = nombreInput.value;
+    const periodo = periodoInput.value;
+    const creditos = creditosInput.value;
+    const promedio = calculatePromedio();
+
+    const modalId = `modal-${nombre.replace(/\s+/g, '-').toLowerCase()}`;
+    const modal = crearModal(nombre, modalId, promedio);
+
+    document.getElementById('modal-materias').appendChild(modal);
+
+    if (!nombre || !periodo || !creditos) {
+        alert("Por favor, complete todos los campos antes de guardar.");
+    } else {
+        const nuevaMateria = crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId);
+        document.getElementById('container-materias').appendChild(nuevaMateria);
+    }
+
+    document.getElementById('materiaForm').reset();
+}
+
+function crearModal(nombre, modalId, promedio) {
+    const modal = document.createElement('div');
+    modal.id = modalId;
+    modal.className = 'modal fade';
+    modal.tabIndex = "-1";
+    modal.ariaHidden = "true";
+    modal.setAttribute("aria-labelledby", "exampleModalLabel");
+    modal.setAttribute("aria-hidden", "true");
+
+    modal.innerHTML = `
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="${modalId}">${nombre}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="modal-rubros" class="modal-body"></div>
+                <div class="modal-footer justify-content-start">
+                    <p><strong>Promedio: </strong>${promedio}</p><br>
+                    <button class="btn btn-warning-outline float-right" data-bs-toggle="modal" data-bs-target="#editarMateria" onclick=abrirModalEdicion()>
+                    <i class='bx bx-edit'></i> Editar
+                    </button>
+                    <button class="btn btn-danger-outline float-right btn-eliminar-materia" onclick=eliminarMateria(this)>
+                        <i class="bx bx-trash"></i> Eliminar
+                    </button>
+                    <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+        </div>
+     </div>
+    `;
+    return modal;
+}
+
+function crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId) {
+    const nuevaMateria = document.createElement('div');
     nuevaMateria.className = 'card p-0';
     nuevaMateria.style.margin = '10px';
 
-    var nombre = document.getElementById('nombreMateria');
-    var periodo = document.getElementById('creditos');
-    var creditos = document.getElementById('porcentajes');
-    var porcentajes = document.getElementById('periodo');
-
-    var modalId = 'modal-' + nombre;
-    var modal = document.createElement('div');
-    modal.id = modalId;
-    modal.className = 'modal';
-
     nuevaMateria.innerHTML = `
-      <div class="card-header">
-        <h5 class="my-0 font-weight-normal">${nombre}</h5>
-      </div>
-      <div class="card-body">
-        <h6 class="card-text"><strong>Periodo: </strong><span>${periodo}</span></h6>
-        <h6 class="card-text"><strong>Créditos: </strong><span>${creditos}</span></h6>
-      </div>
-      <div class="card-footer">
-        <a href="#" class="btn btn-${btnColor}" data-bs-toggle="modal" data-bs-target="${modalId}">Ver detalles</a>
-      </div>
+        <div class="card-header">
+            <h5 class="my-0 font-weight-normal">${nombre}</h5>
+        </div>
+        <div class="card-body">
+            <h6 class="card-text"><strong>Periodo: </strong><span>${periodo}</span></h6>
+            <h6 class="card-text"><strong>Créditos: </strong><span>${creditos}</span></h6>
+        </div>
+        <div class="card-footer">
+            <a href="#" class="btn btn-${btnColor} btn-editar-materia" data-bs-toggle="modal" data-bs-target="#${modalId}">Ver detalles</a>
+        </div>
     `;
 
-    // Agrega la nueva tarjeta al contenedor
-    document.getElementById('container-materias').appendChild(nuevaMateria);
+    return nuevaMateria;
 }
 
-// Manejador de eventos para el envío del formulario
-document.getElementById('materiaForm').addEventListener('submit', function (event) {
-    // Evita que el formulario se envíe de forma predeterminada
-    event.preventDefault();
 
-    // Obtiene los valores del formulario
-    var nombre = document.getElementById('nombreMateria').value;
-    var periodo = document.getElementById('periodo').value;
-    var creditos = document.getElementById('creditos').value;
+// Contador para el id de los rubros
+var rubroCounter = 1;
 
-    // Cierra el modal
-    $('#agregarmateria').modal('hide');
+// Agregar nuevos rubros
+function nuevoRubro() {
+    var newRubroDiv = document.createElement("div");
+    newRubroDiv.className = "row rubro-set";
 
+    var rubroInput = document.createElement("div");
+    rubroInput.className = "col-md-7";
+    rubroInput.innerHTML =
+        '<br><input type="text" class="form-control" name="rubro-evaluacion" id="rubro-' + rubroCounter + '" placeholder="Ejemplo: Proyecto, Tareas, Asistencia, ..." required>';
+    newRubroDiv.appendChild(rubroInput);
 
-    // Limpia el formulario si es necesario
-    document.getElementById('materiaForm').reset();
+    var valorInput = document.createElement("div");
+    valorInput.className = "col-md-3";
+    valorInput.innerHTML =
+        '<br><input type="number" class="form-control" name="valor-rubro-evaluacion" id="valor-rubro-' + rubroCounter + '" placeholder="Ingresa el valor del porcentaje como entero" min="0" max="100" required>';
+    newRubroDiv.appendChild(valorInput);
 
-});
+    var removeButton = document.createElement("div");
+    removeButton.className = "col-md-2";
+    removeButton.innerHTML = '<br><button class="btn btn-danger" onclick="eliminarRubro(this)"> - </button>';
+    newRubroDiv.appendChild(removeButton);
 
+    rubroCounter++;
 
-// Editar la materia seleccionada
-function abrirModalEdicion(nombre, periodo, creditos, porcentajes) {
-    // Cargar datos en el formulario de edición
-    document.getElementById('editarNombreMateria').value = nombre;
-    document.getElementById('editarPeriodo').value = periodo;
-    document.getElementById('editarCreditos').value = creditos;
-    document.getElementById('editarPorcentajes').value = porcentajes;
+    let containerRubros = document.getElementById("rubros-container");
+    containerRubros.appendChild(newRubroDiv);
 
-    // Abrir el modal de edición
-    $('#editarMateria').modal('show');
+    // Ahora obtenemos los valores de los inputs correctamente
+    var rubroInputValue = newRubroDiv.querySelector('[name="rubro-evaluacion"]').value;
+    var valorInputValue = newRubroDiv.querySelector('[name="valor-rubro-evaluacion"]').value;
+
+    var rubroContent = `<strong>${rubroInputValue}: </strong>${valorInputValue}<br>`;
+
+    var modalId = `modal-${document.getElementById('nombreMateria').value.replace(/\s+/g, '-').toLowerCase()}`;
+    var modal = document.getElementById(modalId);
+    var modalBody = modal.querySelector('.modal-body');
+    modalBody.insertAdjacentHTML('beforeend', rubroContent);
+    console.log("info agregada: " + rubroContent);
 }
 
-// Agrega un evento de clic a las tarjetas existentes para abrir el modal de edición
-document.getElementById('container-materias').addEventListener('click', function (event) {
-    if (event.target.classList.contains('btn-editar-materia')) {
-        var card = event.target.closest('.card');
-        var nombre = card.querySelector('.card-title').textContent.trim();
-        var periodo = card.querySelector('.card-periodo').textContent.trim();
-        var creditos = card.querySelector('.card-creditos').textContent.trim();
-        var porcentajes = card.querySelector('.card-porcentajes').textContent.trim();
 
-        abrirModalEdicion(nombre, periodo, creditos, porcentajes);
-    }
-});
-
-// Función para eliminar una materia
-
-function eliminarMateria(event) {
-    if (event.target.classList.contains('btn-eliminar-materia')) {
-        var card = event.target.closest('.card');
-        document.getElementById('container-materias').removeChild(card);
-    }
+// Eliminar espacio de nuevo rubro
+function eliminarRubro(button) {
+    var rubroSetToRemove = button.parentNode.parentNode;
+    rubroSetToRemove.parentNode.removeChild(rubroSetToRemove);
 }
-
-document.getElementById('container-materias').addEventListener('click', eliminarMateria);
 
 
 // Agregar materia al horario
-document.addEventListener('DOMContentLoaded', function () {
-    // Obtener referencias a los elementos del formulario y el botón de guardar cambios
-    const selectMaterias = document.getElementById('selectMaterias');
-    const html5TimeInput = document.getElementById('html5-time-input');
-    const diasCheckbox = document.getElementById('diasCheckbox');
-    const btnGuardarCambios = document.getElementById('btnGuardarCambios');
 
-    // Evento para mostrar los detalles de la materia seleccionada al cambiar la selección
-    selectMaterias.addEventListener('change', function () {
-        // Aquí puedes cargar los detalles de la materia seleccionada en el formulario
-        // Puedes obtener los detalles de la materia desde tu base de datos o cualquier otra fuente de datos
-        const selectedMateria = obtenerDetallesMateria(selectMaterias.value);
-
-        // Actualizar el formulario con los detalles de la materia seleccionada
-        html5TimeInput.value = selectedMateria.hora;
-        // (Actualizar otros campos según sea necesario)
-
-        // Actualizar los checkboxes de días
-        actualizarCheckboxesDias(selectedMateria.dias);
-    });
-
-    // Evento para guardar cambios al hacer clic en el botón "Guardar cambios"
-    btnGuardarCambios.addEventListener('click', function () {
-        // Aquí puedes implementar la lógica para guardar los cambios en tu base de datos
-        const materiaSeleccionada = selectMaterias.value;
-        const nuevaHora = html5TimeInput.value;
-        const nuevosDias = obtenerDiasSeleccionados();
-
-        // Guardar los cambios utilizando fetch, AJAX, o enviar una solicitud al servidor
-        // ...
-
-        // Cerrar el modal después de guardar los cambios
-        $('#editScheduleModal').modal('hide');
-    });
-
-    // Función para obtener los detalles de la materia seleccionada (simulación)
-    function obtenerDetallesMateria(materiaId) {
-        // Puedes obtener los detalles de la materia desde tu base de datos o cualquier otra fuente de datos
-        // Aquí solo se simula una función que devuelve datos de prueba
-        return {
-            hora: '09:30:00',
-            dias: ['Lunes', 'Miércoles']
-            // (Otros detalles de la materia)
-        };
-    }
-
-    // Función para actualizar los checkboxes de días según la información de la materia seleccionada
-    function actualizarCheckboxesDias(diasSeleccionados) {
-        // Desmarcar todos los checkboxes primero
-        diasCheckbox.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) {
-            checkbox.checked = false;
-        });
-
-        // Marcar los checkboxes según los días seleccionados
-        diasSeleccionados.forEach(function (dia) {
-            const checkbox = diasCheckbox.querySelector(`input[value="${dia}"]`);
-            if (checkbox) {
-                checkbox.checked = true;
-            }
-        });
-    }
-
-    // Función para obtener los días seleccionados en el formulario
-    function obtenerDiasSeleccionados() {
-        const checkboxes = diasCheckbox.querySelectorAll('input[type="checkbox"]:checked');
-        return Array.from(checkboxes).map(function (checkbox) {
-            return checkbox.value;
-        });
-    }
-});
+function calculatePromedio(){
+    var promedio = "calculated by a function"
+    return promedio;
+}
