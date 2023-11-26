@@ -3,12 +3,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var guardarMateriaBtn = document.getElementById('guardarMateriaBtn');
 
     // Agrega un manejador de eventos al hacer clic en el botón
-    guardarMateriaBtn.addEventListener('click', function () {
+    guardarMateriaBtn.addEventListener('click', function (event) {
+        event.preventDefault(); // Evita que se envíe el formulario automáticamente
         agregarMateria();
     });
 });
-
-
 
 function agregarMateria() {
     const colores = ['primary', 'secondary', 'success', 'danger', 'warning', 'info'];
@@ -27,17 +26,28 @@ function agregarMateria() {
     const modalId = `modal-${nombre.replace(/\s+/g, '-').toLowerCase()}`;
     const modal = crearModal(nombre, modalId, promedio);
 
-    document.getElementById('modal-materias').appendChild(modal);
+    // Agrega el modal al final del body
+    document.body.appendChild(modal);
+
+    // Inicializa el modal
+    var modalInstance = new bootstrap.Modal(document.getElementById(modalId));
+
+    // Muestra el modal
+    modalInstance.show();
 
     if (!nombre || !periodo || !creditos) {
         alert("Por favor, complete todos los campos antes de guardar.");
+        // Puedes ocultar el modal si los campos no están completos
+        modalInstance.hide();
     } else {
         const nuevaMateria = crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId);
         document.getElementById('container-materias').appendChild(nuevaMateria);
     }
 
     document.getElementById('materiaForm').reset();
+    nuevoRubro(modalId);
 }
+
 
 function crearModal(nombre, modalId, promedio) {
     const modal = document.createElement('div');
@@ -95,10 +105,11 @@ function crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId) {
 
 
 // Contador para el id de los rubros
-var rubroCounter = 1;
+let rubroCounter = 1;
+let rubroContent;
 
 // Agregar nuevos rubros
-function nuevoRubro() {
+function nuevoRubro(modalId) {
     var newRubroDiv = document.createElement("div");
     newRubroDiv.className = "row rubro-set";
 
@@ -125,17 +136,34 @@ function nuevoRubro() {
     containerRubros.appendChild(newRubroDiv);
 
     // Ahora obtenemos los valores de los inputs correctamente
-    var rubroInputValue = newRubroDiv.querySelector('[name="rubro-evaluacion"]').value;
-    var valorInputValue = newRubroDiv.querySelector('[name="valor-rubro-evaluacion"]').value;
+    let rubroInputValue = newRubroDiv.querySelector('[name="rubro-evaluacion"]').value;
+    let valorInputValue = newRubroDiv.querySelector('[name="valor-rubro-evaluacion"]').value;
 
-    var rubroContent = `<strong>${rubroInputValue}: </strong>${valorInputValue}<br>`;
+    rubroContent = `<strong>${rubroInputValue}: </strong>${valorInputValue}<br>`;
+    agregarRubroModal(modalId, rubroContent);
 
-    var modalId = `modal-${document.getElementById('nombreMateria').value.replace(/\s+/g, '-').toLowerCase()}`;
-    var modal = document.getElementById(modalId);
-    var modalBody = modal.querySelector('.modal-body');
-    modalBody.insertAdjacentHTML('beforeend', rubroContent);
-    console.log("info agregada: " + rubroContent);
 }
+
+// Agregar rubro al modal
+function agregarRubroModal(modalId, rubroContent) {
+    const modal = document.getElementById(modalId);
+
+    if (modal) {
+        const modalRubros = modal.querySelector('.modal-body #modal-rubros');
+
+        if (modalRubros) {
+            const pElement = document.createElement('p');
+            pElement.innerHTML = rubroContent;
+
+            modalRubros.appendChild(pElement);
+        } else {
+            console.error('Rubros container not found.');
+        }
+    } else {
+        console.error('Modal not found.');
+    }
+}
+
 
 
 // Eliminar espacio de nuevo rubro
@@ -146,7 +174,6 @@ function eliminarRubro(button) {
 
 
 // Agregar materia al horario
-
 function calculatePromedio(){
     var promedio = "calculated by a function"
     return promedio;
