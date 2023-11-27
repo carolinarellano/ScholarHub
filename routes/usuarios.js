@@ -3,12 +3,12 @@ const router = express.Router();
 
 const usuariosModel = require('../mongo/usuariosModel');
 
-router.get("/usuarios", async (req, res) => {
+router.get('/usuarios', async (req, res) => {
     try {
         const usuarios = await usuariosModel.find();
         res.status(200).json(usuarios);
     } catch (error) {
-        res.status(500).send("No se encontaron usuarios");
+        res.status(500).send("No se encontraron usuarios");
     }
 });
 
@@ -47,6 +47,7 @@ router.post("/usuarios", async (req, res) => {
         });
         let usersSave = await newUser.save();
         res.status(201).json(usersSave);
+        console.log("Usuario guardado: ", usersSave);
     } catch (error) {
         res.status(400).send(error)
     }
@@ -56,14 +57,17 @@ router.post("/ingresar", async (req, res) => {
     try {
         const { usuario, password } = req.body;
 
-        const userFound = await usersModel.findOne({ usuario: usuario });
+        const userFound = await usuariosModel.findOne({ usuario: usuario });
 
         if (!userFound) {
+            console.log("No se encontró el usuario.");
+            console.log(userFound);
             return res.status(404).json({ mensaje: "No se encontró el usuario." });
         }
 
         if (userFound.compare(password)) {
             res.status(200).json(userFound);
+            res.redirect('/inicio.html');
         } else {
             res.status(401).json({ mensaje: "La contraseña no es correcta." });
         }
@@ -76,7 +80,7 @@ router.post("/registro", async (req, res) => {
     try {
         const { usuario, email, password } = req.body;
 
-        let newUser = new usersModel({
+        let newUser = new usuariosModel({
             usuario,
             email,
             password

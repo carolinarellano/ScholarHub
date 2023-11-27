@@ -14,8 +14,11 @@ const port = 3000;
 //Middlewares
 app.use(cors());
 app.use(express.json());
-app.use(express.static("assets"));
-app.use(express.static("fonts"));
+app.use('/assets', express.static(path.join(__dirname, 'assets'))); 
+app.use('/fonts', express.static(path.join(__dirname, 'fonts'))); 
+app.use('/html', express.static(path.join(__dirname, 'html'))); 
+app.use('/libs', express.static(path.join(__dirname, 'libs'))); 
+app.use('/scss', express.static(path.join(__dirname, 'scss'))); 
 
 //Routes
 app.use(usuariosRoutes);
@@ -23,21 +26,6 @@ app.use(materiasRoutes);
 app.use(horarioRoutes);
 app.use(calificacionesRoutes);
 app.use(tareasRoutes);
-
-let mongoConnection = "mongodb+srv://admin:scholarhub@scholarhub.nwvlzcv.mongodb.net/"
-let db = mongoose.connection;
-
-db.on('connecting', () => {
-  console.log('Connecting to MongoDB...');
-  console.log(mongoose.connection.readyState);
-});
-
-db.on('connected', () => {
-  console.log('MongoDB connected!');
-  console.log(mongoose.connection.readyState);
-});
-
-mongoose.connect(mongoConnection);
 
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/html/ingresar.html'))
@@ -51,8 +39,8 @@ app.get('/registro', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/html/registro.html'))
 });
 
-app.get('/olvidar-consteseña', (req, res) => {
-  res.sendFile(path.resolve(__dirname + '/html/olvidar-contraseña.html'))
+app.get('/olvidar-contrasena', (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/html/olvidar-contrasena.html'))
 });
 
 //Init

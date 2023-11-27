@@ -98,7 +98,7 @@
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
                     <label class="form-label" for="password">Contraseña</label>
-                    <a href="olvidar-contraseña">
+                    <a href="olvidar-contrasena">
                       <small>¿Olvidaste tu contraseña?</small>
                     </a>
                   </div>
@@ -121,7 +121,10 @@
                   </div>
                 </div>
                 <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100" type="submit">Ingresar</button>
+                  <form action="/usuarios" method="POST">
+                    <!-- Your form fields here -->
+                    <button class="btn btn-primary d-grid w-100" type="submit">Ingresar</button>
+                  </form>
                 </div>
               </form>
 
