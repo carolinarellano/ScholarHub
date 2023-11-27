@@ -19,6 +19,7 @@ const usuarioSchema = new Schema ({
 
 usuarioSchema.methods.cryptPassword = (password) => {
     let crypted = bcrypt.hashSync(password, 10);
+    return crypted;
 }
 
 usuarioSchema.methods.compare = (password) => {

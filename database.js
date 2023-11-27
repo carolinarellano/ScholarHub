@@ -1,22 +1,21 @@
 const mongoose = require('mongoose');
 
-const mongoConnection =
-  "mongodb+srv://admin:scholarhub@scholarhub.nwvlzcv.mongodb.net/";
+const mongoConnection = "mongodb+srv://admin:scholarhub@scholarhub.nwvlzcv.mongodb.net/test";
 
 let database = mongoose.connection;
 
 database.on("connecting", () => {
-  console.log("Connecting...");
+  console.log("Conectando a la base de datos...");
   console.log(mongoose.connection.readyState);
 });
 
 database.on("connected", () => {
-  console.log("Succesful Connection");
+  console.log("Conexión exitosa");
   console.log(mongoose.connection.readyState);
 });
 
 database.on("error", (err) => {
-  console.error("ERROR!!", err);
+  console.error("Error en la conexión", err);
 });
 
 mongoose.connect(mongoConnection);

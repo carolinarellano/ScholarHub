@@ -43,9 +43,29 @@ app.get('/olvidar-contrasena', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/html/olvidar-contrasena.html'))
 });
 
+app.get('/calificaciones', (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/html/calificaciones.html'))
+});
+
+app.get('/horario', (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/html/horario.html'))
+});
+
+app.get('/inicio', (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/html/inicio.html'))
+});
+
+app.get('/perfil', (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/html/perfil.html'))
+});
+
+app.get('/tareas', (req, res) => {
+  res.sendFile(path.resolve(__dirname + '/html/tareas.html'))
+});
+
 //Init
 app.listen(port, () => {
-  console.log("Server running in port: 3000");
+  console.log("Servidor corriendo en el puerto: " + port);
 });
 
 module.exports = app;

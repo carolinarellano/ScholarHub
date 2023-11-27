@@ -3,7 +3,7 @@ const router = express.Router();
 
 const usuariosModel = require('../mongo/usuariosModel');
 
-router.get('/usuarios', async (req, res) => {
+router.get('/users', async (req, res) => {
     try {
         const usuarios = await usuariosModel.find();
         res.status(200).json(usuarios);
@@ -12,7 +12,7 @@ router.get('/usuarios', async (req, res) => {
     }
 });
 
-router.get('/usuarios/:usuario/:password?', async (req, res) => {
+router.get('/users/:usuario/:password?', async (req, res) => {
     try {
         const user = req.params.usuario;
         const password = req.params.password;
@@ -38,7 +38,7 @@ router.get('/usuarios/:usuario/:password?', async (req, res) => {
 });
 
 
-router.post("/usuarios", async (req, res) => {
+router.post("/users", async (req, res) => {
     try {
         let newUser = new usuariosModel({
             usuario: req.body.usuario,
@@ -62,6 +62,30 @@ router.post("/ingresar", async (req, res) => {
         if (!userFound) {
             console.log("No se encontró el usuario.");
             console.log(userFound);
+            return res.status(404).json({ mensaje: "No se encontró el usuario." });
+        }
+
+        if (userFound.compare(password)) {
+            res.status(200).json(userFound);
+            res.redirect('/inicio.html');
+        } else {
+            res.status(401).json({ mensaje: "La contraseña no es correcta." });
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+router.post("/", async (req, res) => {
+    try {
+        const { usuario, password } = req.body;
+
+        const userFound = await usuariosModel.findOne({ usuario: usuario });
+
+        if (!userFound) {
+            console.log("No se encontró el usuario.");
+            console.log(userFound);
+            console.log(req.body);
             return res.status(404).json({ mensaje: "No se encontró el usuario." });
         }
 
