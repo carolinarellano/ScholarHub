@@ -35,6 +35,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
     <link type="image/png" sizes="32x32" rel="icon" href=".../icons8-journal-32.png">
+    
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -166,54 +167,20 @@
               </div>
               <div class="container">
                 <div id="container-tareas" class="row">
-                    <div class="col-md-6 col-lg-4 mb-3">
-                        <div class="card">
-                            <div class="card-header">
-                              <span class="badge bg-label-primary me-1">
-                                Estrategias Algorítmicas
-                              </span>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Evaluacion asincrona 3</h5>
-                                <p class="card-text">Detalles sobre la tarea.</p>
-                                <button class="btn btn-warning-outline float-right" onclick="editCard(this)"  data-bs-toggle="modal" data-bs-target="#modalEditarTarea">
-                                  <i class='bx bx-edit'></i> Editar
-                                </button>
-                                <button class="btn btn-danger-outline float-right" onclick="deleteCard(this)">
-                                    <i class="bx bx-trash"></i> Eliminar
-                                </button>
-                          </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 mb-3">
-                      <div class="card">
-                          <div class="card-header">
-                            <span class="badge bg-label-info me-1">
-                              Desarrollo de apps y servicios web
-                            </span>
-                          </div>
-                          <div class="card-body">
-                              <h5 class="card-title">Entrega 2: Diseño de interfaces</h5>
-                              <p class="card-text">Detalles sobre la tarea.</p>
-                              <button class="btn btn-warning-outline float-right" onclick="editCard(this)"  data-bs-toggle="modal" data-bs-target="#modalEditarTarea">
-                                <i class='bx bx-edit'></i> Editar
-                              </button>
-                              <button class="btn btn-danger-outline float-right" onclick="deleteCard(this)">
-                                  <i class="bx bx-trash"></i> Eliminar
-                              </button>
-                          </div>
-                      </div>
-                  </div>
                   <div class="col-md-6 col-lg-4 mb-3">
                     <div class="card">
                         <div class="card-header">
-                          <span class="badge bg-label-success me-1">
-                            Organización y Arquitectura de Computadoras
+                          <span class="badge bg-label-warning me-1">
+                            Técnicas de Integración de Código
                           </span>
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">Performance</h5>
+                            <p id="categoria"><small>Examen</small></p>
+                            <h5 class="card-title">Estudiar para el examen</h5>
                             <p class="card-text">Detalles sobre la tarea.</p>
+                            <small>
+                              <p id="fechaEntrega" class="card-text"><b>Fecha: </b>11/10/2023</p>
+                            </small>
                             <button class="btn btn-warning-outline float-right" onclick="editCard(this)"  data-bs-toggle="modal" data-bs-target="#modalEditarTarea">
                               <i class='bx bx-edit'></i> Editar
                             </button>
@@ -222,54 +189,34 @@
                             </button>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-lg-4 mb-3">
-                  <div class="card">
-                      <div class="card-header">
-                        <span class="badge bg-label-warning me-1">
-                          Técnicas de Integración de Código
-                        </span>
-                      </div>
-                      <div class="card-body">
-                          <h5 class="card-title">Estudiar para el examen</h5>
-                          <p class="card-text">Detalles sobre la tarea.</p>
-                          <button class="btn btn-warning-outline float-right" onclick="editCard(this)"  data-bs-toggle="modal" data-bs-target="#modalEditarTarea">
-                            <i class='bx bx-edit'></i> Editar
-                          </button>
-                          <button class="btn btn-danger-outline float-right" onclick="deleteCard(this)">
-                              <i class="bx bx-trash"></i> Eliminar
-                          </button>
-                      </div>
                   </div>
-                </div>
-                <div class="col-md-6 col-lg-4 mb-3">
-                  <div class="card">
-                      <div class="card-header">
-                        <span id="opcionesMateria" class="badge bg-label-danger me-1">
-                          Lenguajes Formales
-                        </span>
-                      </div>
-                      <div class="card-body">
-                          <p id="categoria"><small>Proyecto</small></p>
-                          <h5 id="nombreActividad" class="card-title">Planeación Proyecto final</h5>
-                          <p id="detallesExtra" class="card-text">Detalles sobre la tarea.</p>
-                          <small>
-                            <p id="fechaEntrega" class="card-text"><b>Fecha: </b>11/10/2023</p>
-                          </small>
-                          <button class="btn btn-warning-outline float-right" onclick="editCard(this)" data-bs-toggle="modal" data-bs-target="#modalEditarTarea">
-                            <i class='bx bx-edit'></i> Editar
-                          </button>
-                          <button class="btn btn-danger-outline float-right" onclick="deleteCard(this)">
-                              <i class="bx bx-trash"></i> Eliminar
-                          </button>
-                      </div>
-                  </div>
-              </div>
-                    
+                  <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                          <span id="opcionesMateria" class="badge bg-label-danger me-1">
+                            Lenguajes Formales
+                          </span>
+                        </div>
+                        <div class="card-body">
+                            <p id="categoria"><small>Proyecto</small></p>
+                            <h5 id="nombreActividad" class="card-title">Planeación Proyecto final</h5>
+                            <p id="detallesExtra" class="card-text">Detalles sobre la tarea.</p>
+                            <small>
+                              <p id="fechaEntrega" class="card-text"><b>Fecha: </b>11/10/2023</p>
+                            </small>
+                            <button class="btn btn-warning-outline float-right" onclick="editCard(this)" data-bs-toggle="modal" data-bs-target="#modalEditarTarea">
+                              <i class='bx bx-edit'></i> Editar
+                            </button>
+                            <button class="btn btn-danger-outline float-right" onclick="deleteCard(this)">
+                                <i class="bx bx-trash"></i> Eliminar
+                            </button>
+                        </div>
+                    </div>
+                </div>                    
             </div>
               <!--/ Layout Demo -->
               <div class="d-flex justify-content-end">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAgregarTarea">Agregar tarea</button>
+                <button class="btn btn-primary" id="abrirModalAgregarTarea" data-bs-toggle="modal" data-bs-target="#modalAgregarTarea">Agregar tarea</button>
               </div>
               </div>
           </div>
@@ -286,11 +233,11 @@
                       <form id="tareaform">
                         <div class="form-group">
                           <label for="nombreActividad">Nombre de la actividad</label>
-                          <input type="text" class="form-control" id="nombreActividad">
+                          <input type="text" class="form-control" id="modal-agregar-nombreActividad">
                         </div>
                         <div class="form-group">
                           <label for="materia">Materia</label>
-                          <select class="form-control" id="opcionesMateria">
+                          <select class="form-control" id="modal-agregar-opcionesMateria">
                             <option>Lenguajes Formales</option>
                             <option>Desarrollo de Aplicaciones y Servicios Web</option>
                             <option>Organización y Arquitectura de Computadoras</option>
@@ -300,7 +247,7 @@
                         </div>
                         <div class="form-group">
                           <label for="categoria">Categoria</label>
-                          <select class="form-control" id="categoria">
+                          <select class="form-control" id="modal-agregar-categoria">
                             <option>Tarea</option>
                             <option>Examen</option>
                             <option>Practica</option>
@@ -309,18 +256,18 @@
                         </div>
                         <div class="form-group">
                           <label for="fechaEntrega">Fecha de entrega</label>
-                          <input type="date" class="form-control" id="fechaEntrega">
+                          <input type="date" class="form-control" id="modal-agregar-fechaEntrega">
                         </div>
                         <div class="form-group">
                           <label for="detallesExtra">Detalles extra</label>
-                          <input class="form-control" id="detallesExtra" rows="3"></input>
+                          <input class="form-control" id="modal-agregar-detallesExtra" rows="3"></input>
                         </div>
                       </form>
                     </div>
                     <div class="modal-footer justify-content-start">
-                      <button type="button" class="btn btn-success" onclick=agregarTarea()>Guardar</button>
+                      <button id="guardarTareaBtn" type="button" class="btn btn-success" onclick="agregarTarea()">Guardar</button>
                       <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="modal">Cerrar</button>
-                    </div>
+                   </div>
                   </div>
                 </div>
               </div>

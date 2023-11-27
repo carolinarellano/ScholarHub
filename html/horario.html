@@ -675,8 +675,16 @@
                   <form id="materiaForm">
                       <!-- Nombre de la materia -->
                       <div class="form-group">
-                          <label for="nombreMateria">Nombre de la Materia:</label>
+                        <div class="row">
+                          <div class="col-md-10">
+                            <label for="nombreMateria">Nombre de la Materia:</label>
                           <input type="text" class="form-control" id="nombreMateria" placeholder="Ejemplo: Estrategias algorítmicas" name="nombreMateria" required>
+                          </div>
+                          <div class="col-md-2">
+                            <br>
+                            <button id="nombreMateriaBtn" type="button" class="btn btn-success" onclick="guardarNombreMateria(this)"> ✓ </button>
+                          </div>
+                        </div>
                       </div>
                       <br>
                       <!-- Número de créditos -->
@@ -691,18 +699,18 @@
                           <label for="porcentajes">Porcentajes de Evaluación</label>
                           <div class="row">
                             <div class="col-md-7">
-                              <label for="rubro">Rubro: </label>
-                              <input type="text" class="form-control" id="rubro-0" name="rubro-evaluacion" placeholder="Ejemplo: Proyecto, Tareas, Asistencia, ..." required>
+                                <label for="rubro">Rubro: </label>
+                                <input type="text" class="form-control" id="rubro-0" name="rubro-evaluacion-0" placeholder="Ejemplo: Proyecto, Tareas, Asistencia, ..." required>
                             </div>
                             <div class="col-md-3">
-                              <label for="rubro">Valor (%): </label>
-                              <input type="number" class="form-control" id="valor-rubro-0" name="valor-rubro-evaluacion" placeholder="Ingresa el valor del porcentaje como entero" min=0 max=100 required>
-                            </div>                          
-                            <div class="col-md-2">
-                              <br>
-                              <button id="nuevoRubrobtn"type="button" class="btn btn-danger" onclick=nuevoRubro()> + </button>
+                                <label for="rubro">Valor (%): </label>
+                                <input type="number" class="form-control" id="valor-rubro-0" name="valor-rubro-evaluacion-0" placeholder="Ingresa el valor del porcentaje como entero" min="0" max="100" required>
                             </div>
-                          </div>                  
+                            <div class="col-md-1">
+                                <br>
+                                <button id="nuevoRubrobtn" type="button" class="btn btn-sm btn-danger" onclick="nuevoRubro(this)"> + </button>
+                            </div>
+                        </div>            
                         </div>
                       </div>
                       <br>
@@ -725,8 +733,8 @@
     </div>
     
 
-    <!--Modal para editar una materia-->
-    <div>
+    <!--Modales para editar una materia-->
+    <div id="editoresMaterias">
       <div class="modal fade" id="editarMateria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">

@@ -5,11 +5,34 @@ document.addEventListener('DOMContentLoaded', function () {
     // Agrega un manejador de eventos al hacer clic en el botón
     guardarMateriaBtn.addEventListener('click', function (event) {
         event.preventDefault(); // Evita que se envíe el formulario automáticamente
-        agregarMateria();
+        const nombreMateria = document.getElementById('nombreMateria').value;
+        const modalId = obtenerModalIdDinamico(nombreMateria);
+        agregarMateria(modalId);
     });
 });
 
-function agregarMateria() {
+function obtenerModalIdDinamico(nombre) {
+    // Aquí generas dinámicamente el ID del modal basado en el nombre
+    return `modal-${nombre.replace(/\s+/g, '-').toLowerCase()}`;
+}
+
+
+function guardarNombreMateria(button) {
+    const nombre = document.getElementById('nombreMateria').value;
+
+    if (!nombre) {
+        alert("Por favor, ingrese el nombre de la materia antes de guardar.");
+        return;
+    }
+
+    const modalId = obtenerModalIdDinamico(nombre);
+    // Guarda el modalId en sessionStorage
+    sessionStorage.setItem('modalId', modalId);
+    console.log('ModalId guardado en sessionStorage:', modalId);
+}
+
+
+function agregarMateria(modalId) {
     const colores = ['primary', 'secondary', 'success', 'danger', 'warning', 'info'];
     const indiceAleatorio = Math.floor(Math.random() * colores.length);
     const btnColor = colores[indiceAleatorio];
@@ -23,11 +46,34 @@ function agregarMateria() {
     const creditos = creditosInput.value;
     const promedio = calculatePromedio();
 
-    const modalId = `modal-${nombre.replace(/\s+/g, '-').toLowerCase()}`;
-    const modal = crearModal(nombre, modalId, promedio);
+    const materiaInfo = {
+        nombre: nombre,
+        periodo: periodo,
+        creditos: creditos,
+        promedio: promedio,
+        modalId: modalId
+    };
 
-    // Agrega el modal al final del body
-    document.body.appendChild(modal);
+    let materiasList = JSON.parse(sessionStorage.getItem('materiasList')) || [];
+
+    // Agrega la información de la materia a la lista
+    materiasList.push(materiaInfo);
+
+    // Guarda la lista de materias actualizada en sessionStorage
+    sessionStorage.setItem('materiasList', JSON.stringify(materiasList));
+
+
+    // Guarda el modalId en sessionStorage
+    sessionStorage.setItem('modalId', modalId);
+    console.log('ModalId guardado en sessionStorage:', modalId);
+
+    // Verifica si el modal ya está en el DOM
+    let modal = document.getElementById(modalId);
+    if (!modal) {
+        // Si no está en el DOM, crea el modal y lo agrega al final del body
+        modal = crearModal(nombre, modalId, promedio);
+        document.body.appendChild(modal);
+    }
 
     // Inicializa el modal
     var modalInstance = new bootstrap.Modal(document.getElementById(modalId));
@@ -45,7 +91,10 @@ function agregarMateria() {
     }
 
     document.getElementById('materiaForm').reset();
-    nuevoRubro(modalId);
+
+    const nuevoRubroBtn = document.getElementById('nuevoRubrobtn');
+
+    nuevoRubro(nuevoRubroBtn, modalId);
 }
 
 
@@ -65,7 +114,7 @@ function crearModal(nombre, modalId, promedio) {
                     <h5 class="modal-title" id="${modalId}">${nombre}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div id="modal-rubros" class="modal-body"></div>
+                <div class="modal-body"></div>
                 <div class="modal-footer justify-content-start">
                     <p><strong>Promedio: </strong>${promedio}</p><br>
                     <button class="btn btn-warning-outline float-right" data-bs-toggle="modal" data-bs-target="#editarMateria" onclick=abrirModalEdicion()>
@@ -79,6 +128,8 @@ function crearModal(nombre, modalId, promedio) {
         </div>
      </div>
     `;
+
+    agregarRubrosDesdeSessionStorage(modalId);
     return modal;
 }
 
@@ -104,58 +155,59 @@ function crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId) {
 }
 
 
-// Contador para el id de los rubros
-let rubroCounter = 1;
-let rubroContent;
+function nuevoRubro(button) {
+    const nombreMateriaInput = document.getElementById('nombreMateria');
+    const nombreMateria = nombreMateriaInput.value;
 
-// Agregar nuevos rubros
-function nuevoRubro(modalId) {
-    var newRubroDiv = document.createElement("div");
-    newRubroDiv.className = "row rubro-set";
+    const modalId = obtenerModalIdDinamico(nombreMateria);
 
-    var rubroInput = document.createElement("div");
-    rubroInput.className = "col-md-7";
-    rubroInput.innerHTML =
-        '<br><input type="text" class="form-control" name="rubro-evaluacion" id="rubro-' + rubroCounter + '" placeholder="Ejemplo: Proyecto, Tareas, Asistencia, ..." required>';
-    newRubroDiv.appendChild(rubroInput);
+    const rubroInputValue = document.getElementById('rubro-0').value;
+    const valorInputValue = document.getElementById('valor-rubro-0').value;
 
-    var valorInput = document.createElement("div");
-    valorInput.className = "col-md-3";
-    valorInput.innerHTML =
-        '<br><input type="number" class="form-control" name="valor-rubro-evaluacion" id="valor-rubro-' + rubroCounter + '" placeholder="Ingresa el valor del porcentaje como entero" min="0" max="100" required>';
-    newRubroDiv.appendChild(valorInput);
+    const rubroActual = { rubro: rubroInputValue, valor: valorInputValue };
 
-    var removeButton = document.createElement("div");
-    removeButton.className = "col-md-2";
-    removeButton.innerHTML = '<br><button class="btn btn-danger" onclick="eliminarRubro(this)"> - </button>';
-    newRubroDiv.appendChild(removeButton);
+    // Obtiene el objeto de rubros del sessionStorage o crea uno nuevo si no existe
+    let rubrosObject = JSON.parse(sessionStorage.getItem('rubrosObject')) || {};
 
-    rubroCounter++;
+    // Agrega el rubro actual al objeto de rubros utilizando modalId como clave
+    rubrosObject[modalId] = rubrosObject[modalId] || [];
+    rubrosObject[modalId].push(rubroActual);
 
-    let containerRubros = document.getElementById("rubros-container");
-    containerRubros.appendChild(newRubroDiv);
+    // Guarda el objeto de rubros en sessionStorage
+    sessionStorage.setItem('rubrosObject', JSON.stringify(rubrosObject));
 
-    // Ahora obtenemos los valores de los inputs correctamente
-    let rubroInputValue = newRubroDiv.querySelector('[name="rubro-evaluacion"]').value;
-    let valorInputValue = newRubroDiv.querySelector('[name="valor-rubro-evaluacion"]').value;
+    console.log("Objeto de rubros actualizado:", rubrosObject);
+    console.log("Modal ID para agregar rubros: ", modalId);
 
-    rubroContent = `<strong>${rubroInputValue}: </strong>${valorInputValue}<br>`;
-    agregarRubroModal(modalId, rubroContent);
-
+    // Resetea los valores del input
+    document.getElementById('rubro-0').value = '';
+    document.getElementById('valor-rubro-0').value = '';
 }
 
-// Agregar rubro al modal
-function agregarRubroModal(modalId, rubroContent) {
+
+function agregarRubrosDesdeSessionStorage(modalId) {
+    const rubrosObject = JSON.parse(sessionStorage.getItem('rubrosObject')) || {};
+    const rubrosArray = rubrosObject[modalId] || [];
+
     const modal = document.getElementById(modalId);
 
     if (modal) {
-        const modalRubros = modal.querySelector('.modal-body #modal-rubros');
+        console.log('Modal encontrado en el DOM.');
+
+        const modalRubros = modal.querySelector('.modal-body');
 
         if (modalRubros) {
-            const pElement = document.createElement('p');
-            pElement.innerHTML = rubroContent;
+            console.log('Rubros container encontrado.');
 
-            modalRubros.appendChild(pElement);
+            modalRubros.innerHTML = '';
+
+            rubrosArray.forEach(rubro => {
+                const pElement = document.createElement('p');
+                const rubroText = rubro.rubro ? `<strong>${rubro.rubro}: </strong>` : 'no agregado';
+                const valorText = rubro.valor ? `${rubro.valor}<br>` : 'no agregado';
+                pElement.innerHTML = `${rubroText}${valorText}`;
+                modalRubros.appendChild(pElement);
+            });
         } else {
             console.error('Rubros container not found.');
         }
@@ -165,16 +217,14 @@ function agregarRubroModal(modalId, rubroContent) {
 }
 
 
-
 // Eliminar espacio de nuevo rubro
 function eliminarRubro(button) {
     var rubroSetToRemove = button.parentNode.parentNode;
     rubroSetToRemove.parentNode.removeChild(rubroSetToRemove);
 }
 
-
 // Agregar materia al horario
-function calculatePromedio(){
+function calculatePromedio() {
     var promedio = "calculated by a function"
     return promedio;
 }
