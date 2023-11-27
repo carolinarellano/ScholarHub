@@ -1,14 +1,11 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Obtén el botón por su ID
-    var guardarMateriaBtn = document.getElementById('guardarMateriaBtn');
+// Crear materia
 
-    // Agrega un manejador de eventos al hacer clic en el botón
+document.addEventListener('DOMContentLoaded', function () {
+    var guardarMateriaBtn = document.getElementById('guardarMateriaBtn');
     guardarMateriaBtn.addEventListener('click', function (event) {
         event.preventDefault(); // Evita que se envíe el formulario automáticamente
         const nombreMateria = document.getElementById('nombreMateria').value;
-        console.log(nombreMateria);
         const modalId = obtenerModalIdDinamico(nombreMateria);
-        console.log(modalId);
         agregarMateria(modalId);
     });
 });
@@ -17,21 +14,16 @@ function obtenerModalIdDinamico(nombre) {
     return `modal-${nombre.replace(/\s+/g, '-').toLowerCase()}`;
 }
 
-
 function guardarNombreMateria(button) {
     const nombre = document.getElementById('nombreMateria').value;
-
     if (!nombre) {
         alert("Por favor, ingrese el nombre de la materia antes de guardar.");
         return;
     }
 
     const modalId = obtenerModalIdDinamico(nombre);
-    // Guarda el modalId en sessionStorage
     sessionStorage.setItem('modalId', modalId);
-    console.log('ModalId guardado en sessionStorage:', modalId);
 }
-
 
 function agregarMateria(modalId) {
     const colores = ['primary', 'secondary', 'success', 'danger', 'warning', 'info'];
@@ -55,37 +47,27 @@ function agregarMateria(modalId) {
         promedio: promedio
     };
 
-    let materiasList = JSON.parse(sessionStorage.getItem('materiasList')) || [];
+    let materiasList = JSON.parse(sessionStorage.getItem('materiasList')) || {};
 
-    // Agrega la información de la materia a la lista
-    materiasList.push(materiaInfo);
+    materiasList[nombre] = materiasList[nombre] || [];
+    materiasList[nombre].push(materiaInfo);
 
-    // Guarda la lista de materias actualizada en sessionStorage
     sessionStorage.setItem('materiasList', JSON.stringify(materiasList));
-
-    // Guarda el modalId en sessionStorage
     sessionStorage.setItem('modalId', modalId);
-    console.log('ModalId guardado en sessionStorage:', modalId);
 
-    // Verifica si el modal ya está en el DOM
     let modal = document.getElementById(modalId);
     let modalID = sessionStorage.getItem('modalId');
     if (!modal) {
-        // Si no está en el DOM, crea el modal y lo agrega al final del body
         modal = crearModal(nombre, modalID, promedio);
         document.body.appendChild(modal);
         agregarRubrosDesdeSessionStorage(modalId);
     }
 
-    // Inicializa el modal
     var modalInstance = new bootstrap.Modal(document.getElementById(modalId));
-
-    // Muestra el modal
     modalInstance.show();
 
     if (!nombre || !periodo || !creditos) {
         alert("Por favor, complete todos los campos antes de guardar.");
-        // Puedes ocultar el modal si los campos no están completos
         modalInstance.hide();
     } else {
         const nuevaMateria = crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId);
@@ -93,12 +75,9 @@ function agregarMateria(modalId) {
     }
 
     document.getElementById('materiaForm').reset();
-
     const nuevoRubroBtn = document.getElementById('nuevoRubrobtn');
-
     nuevoRubro(nuevoRubroBtn);
 }
-
 
 function crearModal(nombre, modalId, promedio) {
     const modal = document.createElement('div');
@@ -155,7 +134,6 @@ function crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId) {
     return nuevaMateria;
 }
 
-
 function nuevoRubro(button) {
     const nombreMateriaInput = document.getElementById('nombreMateria');
     const nombreMateria = nombreMateriaInput.value;
@@ -167,42 +145,28 @@ function nuevoRubro(button) {
 
     const rubroActual = { rubro: rubroInputValue, valor: valorInputValue };
 
-    // Obtiene el objeto de rubros del sessionStorage o crea uno nuevo si no existe
     let rubrosObject = JSON.parse(sessionStorage.getItem('rubrosObject')) || {};
 
-    // Agrega el rubro actual al objeto de rubros utilizando modalId como clave
     rubrosObject[modalId] = rubrosObject[modalId] || [];
     rubrosObject[modalId].push(rubroActual);
 
-    // Guarda el objeto de rubros en sessionStorage
     sessionStorage.setItem('rubrosObject', JSON.stringify(rubrosObject));
 
-    console.log("Objeto de rubros actualizado:", rubrosObject);
-    console.log("Modal ID para agregar rubros: ", modalId);
-
-    // Resetea los valores del input
     document.getElementById('rubro-0').value = '';
     document.getElementById('valor-rubro-0').value = '';
 }
-
 
 function agregarRubrosDesdeSessionStorage(modalId) {
     const rubrosObject = JSON.parse(sessionStorage.getItem('rubrosObject')) || {};
     const rubrosArray = rubrosObject[modalId] || [];
 
     let modalID = sessionStorage.getItem('modalId');
-    console.log(modalID);
     const modal = document.getElementById(modalID);
-    console.log("agregarRubrosDesdeSessionStorage", modal);
 
     if (modal) {
-        console.log('Modal encontrado en el DOM.');
-
         const modalRubros = modal.querySelector('.modal-body');
 
         if (modalRubros) {
-            console.log('Rubros container encontrado.');
-
             modalRubros.innerHTML = '';
 
             rubrosArray.forEach(rubro => {
@@ -220,22 +184,16 @@ function agregarRubrosDesdeSessionStorage(modalId) {
     }
 }
 
+function calculatePromedio() {
+    let promedio = "Aqui va el promedio"
 
-// Eliminar espacio de nuevo rubro
-function eliminarRubro(button) {
-    var rubroSetToRemove = button.parentNode.parentNode;
-    rubroSetToRemove.parentNode.removeChild(rubroSetToRemove);
+    return promedio;
 }
 
-// Agregar materia al horario
-function calculatePromedio(modalId) {
-    const rubrosObject = JSON.parse(sessionStorage.getItem('rubrosObject')) || {};
-    const rubrosArray = rubrosObject[modalId] || [];
-    let calificacion = [10, 9, 7];
-    // Calculate total of all values in array 
-    let sumaValores = 0;
-    rubrosArray.forEach(rubro => {
-        sumaValores += rubro;
-    });
-    return suma / rubrosArray.length;
-}
+// agregar materia y toda la info al inicio de la pagina 
+// agregar materia al menu de editar horario (para poder agregarlo a este)
+
+
+
+
+// 

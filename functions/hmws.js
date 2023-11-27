@@ -1,3 +1,4 @@
+// Agregar tarea
 document.addEventListener('DOMContentLoaded', function () {
     // Obtén el botón por su ID
     var abrirModalBtn = document.getElementById('abrirModalAgregarTarea');
@@ -52,7 +53,6 @@ function agregarTarea() {
     modalAgregarTarea.hide();
 }
 
-
 function crearModalActividad(id, nombreActividad, materiaSeleccionada, categoriaSeleccionada, fechaEntrega, detallesExtra, color) {
     const nuevaTarea = document.createElement('div');
     nuevaTarea.id = id;
@@ -86,11 +86,3 @@ function crearModalActividad(id, nombreActividad, materiaSeleccionada, categoria
     return nuevaTarea;
 }
 
-// Funciones editCard y deleteCard no proporcionadas en tu código original
-function editCard(button) {
-    // Implementa la lógica para editar la tarjeta
-}
-
-function deleteCard(button) {
-    // Implementa la lógica para eliminar la tarjeta
-}
