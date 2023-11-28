@@ -86,21 +86,27 @@ router.post("/html/ingresar", async (req, res) => {
     }
 });
 
-router.post("/html/registro", async (req, res) => {
+router.post('/html/registro', async (req, res) => {
     try {
         const { usuario, email, password } = req.body;
 
-        let newUser = new usuariosModel({
+        const newUser = new usuariosModel({
             usuario,
             email,
             password
         });
 
-        let userSaved = await newUser.save();
+        newUser.password = newUser.cryptPassword(newUser.password);
+
+        const userSaved = await newUser.save();
+
+        console.log("Usuario guardado: ", userSaved);
+        console.log("Usuario registrado correctamente.")
         res.status(201).json(userSaved);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        console.log("Error: ", error);
+        res.status(400).send(error)
     }
-});
+})
 
 module.exports = router;
