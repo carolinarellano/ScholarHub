@@ -17,13 +17,14 @@ const usuarioSchema = new Schema ({
     }
 });
 
-usuarioSchema.methods.cryptPassword = (password) => {
+usuarioSchema.methods.cryptPassword = function(password) {
     let crypted = bcrypt.hashSync(password, 10);
     return crypted;
 }
 
-usuarioSchema.methods.compare = (password) => {
-    return bcrypt.compareSync(password, this.password);
+usuarioSchema.methods.compare = function(password) {
+    const comparisonResult = bcrypt.compareSync(password, this.password);
+    return comparisonResult;
 }
 
 module.exports = model('Usuarios', usuarioSchema);

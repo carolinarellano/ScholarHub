@@ -4,36 +4,43 @@ document.getElementById('formAuthentication').addEventListener('submit', functio
     iniciarSesion(); // Call your login function
 });
 
+document.getElementById('formAuthenticationReg').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent the default form submission
+    registro(); // Call your login function
+});
+
 function iniciarSesion() {
     console.log('Iniciando sesión...');
 
     const usuario = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
+    if (!usuario || !password) {
+        alert("Ingresa tus datos correctamente.");
+        return;
+    }
+
     console.log(usuario);
     console.log(password);
 
-    fetch('http://localhost:3000/users', {
+    fetch('http://localhost:3000/html/ingresar', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            usuario,
-            password
+            usuario: usuario,
+            password: password
         }),
     })
-        .then(res => res.json())
-        .then(data => {
-            console.log("Inicio de sesion correcto", data);
-            if (!data.error) {
-                //mostrarAlerta("success", "Inicio de sesión correcto.");
-                const usuario = data.usuario;
-                document.getElementById('username').innerText = usuario;
-                window.location.href = '/inicio';
-            }
-        })
-        .catch(err => console.log(err));
+    .then(res => {
+        if (res.status == 200) {
+            window.location.href = '/html/inicio';
+        } else {
+            alert("Usuario o contraseña incorrectos.");
+        }
+    })
+    .catch(err => console.log(err));
 }
 
 function registro() {
@@ -43,7 +50,7 @@ function registro() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    fetch('http://localhost:3000/registro', {
+    fetch('http://localhost:3000/html/registro', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -54,14 +61,16 @@ function registro() {
             password
         }),
     })
-        .then(res => res.json())
-        .then(data => {
-            console.log("Registro correcto", data);
-            if (!data.error) {
-                //mostrarAlerta("success", "Registro correcto.");
-                const usuario = data.usuario;
-                document.getElementById('username').innerText = usuario;
-            }
-        })
-        .catch(err => console.log(err));
+    .then(res => res.json())
+    .then(data => {
+        console.log("Registro correcto", data);
+        if (!data.error) {
+            window.location.href = '/inicio';
+        }
+    })
+    .catch(err => console.log(err));
 }
+
+/*document.getElementById('cerrarSesion').addEventListener('click', function() {
+    window.location.href = '/html/ingresar';
+})*/

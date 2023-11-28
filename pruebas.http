@@ -7,9 +7,9 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "usuario": "diegorozco",
+    "usuario": "diego",
     "email": "diego.orozco@correo.mx",
-    "password": "diegorozco"
+    "password": "diego"
 }
 ###
 

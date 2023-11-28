@@ -30,31 +30,31 @@ app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/html/ingresar.html'))
 });
 
-app.get('/ingresar', (req, res) => {
+app.get('/html/ingresar', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/html/ingresar.html'))
 });
 
-app.get('/registro', (req, res) => {
+app.get('/html/registro', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/html/registro.html'))
 });
 
-app.get('/olvidar-contrasena', (req, res) => {
+app.get('/html/olvidar-contrasena', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/html/olvidar-contrasena.html'))
 });
 
-app.get('/horario', (req, res) => {
+app.get('/html/horario', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/html/horario.html'))
 });
 
-app.get('/inicio', (req, res) => {
+app.get('/html/inicio', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/html/inicio.html'))
 });
 
-app.get('/perfil', (req, res) => {
+app.get('/html/perfil', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/html/perfil.html'))
 });
 
-app.get('/tareas', (req, res) => {
+app.get('/html/tareas', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/html/tareas.html'))
 });
 

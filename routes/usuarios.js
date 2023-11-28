@@ -47,39 +47,46 @@ router.post("/users", async (req, res) => {
             email: req.body.email,
             password: req.body.password
         });
+        newUser.password = newUser.cryptPassword(newUser.password);
         let usersSave = await newUser.save();
         res.status(201).json(usersSave);
         console.log("Usuario guardado: ", usersSave);
     } catch (error) {
+        console.log("Error: ", error);
         res.status(400).send(error)
     }
 });
 
 
 // Rutas de ingreso y registro
-router.post("/ingresar", async (req, res) => {
+router.post("/html/ingresar", async (req, res) => {
     try {
         const { usuario, password } = req.body;
 
         const userFound = await usuariosModel.findOne({ usuario: usuario });
-
-        console.log("Usuario encontrado:", userFound);
-
+        
         if (!userFound) {
-            return res.status(404).json({ mensaje: "No se encontró el usuario." });
+            console.log("No se encontró el usuario.")
+            res.status(404).json({ mensaje: "No se encontró el usuario." });
+            return;
         }
 
-        if (userFound.compare(password)) {
+        const passwordMatch = userFound.compare(password);
+
+        if (passwordMatch) {
+            console.log("Sesion iniciada con éxito.");
             res.status(200).json(userFound);
         } else {
-            res.status(401).json({ mensaje: "La contraseña no es correcta." });
+            console.log("No se pudo iniciar la sesión.");
+            res.status(500).json({ mensaje: "La contraseña no es correcta." });
         }
+
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-router.post("/registro", async (req, res) => {
+router.post("/html/registro", async (req, res) => {
     try {
         const { usuario, email, password } = req.body;
 
