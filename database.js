@@ -19,3 +19,5 @@ database.on("error", (err) => {
 });
 
 mongoose.connect(mongoConnection);
+
+module.exports = database;

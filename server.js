@@ -7,7 +7,6 @@ const app = express();
 const usuariosRoutes = require('./routes/usuarios');
 const materiasRoutes = require('./routes/materias');
 const horarioRoutes = require('./routes/horario');
-const calificacionesRoutes = require('./routes/calificaciones');
 const tareasRoutes = require('./routes/tareas');
 const port = 3000;
 
@@ -18,13 +17,13 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/fonts', express.static(path.join(__dirname, 'fonts'))); 
 app.use('/html', express.static(path.join(__dirname, 'html'))); 
 app.use('/libs', express.static(path.join(__dirname, 'libs'))); 
-app.use('/scss', express.static(path.join(__dirname, 'scss'))); 
+app.use('/scss', express.static(path.join(__dirname, 'scss')));
+app.use('/functions', express.static(path.join(__dirname, 'functions'))); 
 
 //Routes
 app.use(usuariosRoutes);
 app.use(materiasRoutes);
 app.use(horarioRoutes);
-app.use(calificacionesRoutes);
 app.use(tareasRoutes);
 
 app.get('/', (req, res) => {
@@ -41,10 +40,6 @@ app.get('/registro', (req, res) => {
 
 app.get('/olvidar-contrasena', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/html/olvidar-contrasena.html'))
-});
-
-app.get('/calificaciones', (req, res) => {
-  res.sendFile(path.resolve(__dirname + '/html/calificaciones.html'))
 });
 
 app.get('/horario', (req, res) => {
