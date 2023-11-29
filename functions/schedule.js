@@ -1,14 +1,59 @@
-// Crear materia
-
 document.addEventListener('DOMContentLoaded', function () {
+    cargarMateriasAlmacenadas();
+
     var guardarMateriaBtn = document.getElementById('guardarMateriaBtn');
     guardarMateriaBtn.addEventListener('click', function (event) {
-        event.preventDefault(); // Evita que se envíe el formulario automáticamente
+        event.preventDefault();
         const nombreMateria = document.getElementById('nombreMateria').value;
         const modalId = obtenerModalIdDinamico(nombreMateria);
         agregarMateria(modalId);
     });
 });
+
+function cargarMateriasAlmacenadas() {
+    let materiasList = JSON.parse(sessionStorage.getItem('materiasList'));
+
+    debugger;
+
+    if (materiasList) {
+        Object.keys(materiasList).forEach(nombre => {
+            const materiaData = materiasList[nombre][0];
+            const pillId = `pill-${nombre.replace(/\s+/g, '-').toLowerCase()}`;
+            const creditos = materiaData.creditos;
+            const profesor = materiaData.profesor;
+            const color = materiaData.colorBtn;
+            const modalId = materiaData.modalId;
+            const periodo = materiaData.periodo;
+
+            crearPill(nombre, pillId, creditos, profesor, color);
+            let tarjetaMateria = crearTarjetaMateria(nombre, periodo, creditos, color, modalId);
+            container.append(tarjetaMateria);
+        });
+    }
+}
+
+function crearPill(nombre, pillId, creditos, profesor, color) {
+    const materiaPill = document.createElement('div');
+    materiaPill.className += " materia-button";
+    materiaPill.id = pillId;
+    materiaPill.innerHTML = `
+        <span class="materia-button-info">
+            Créditos: ${creditos}<br>
+            Profesor: ${profesor}
+        </span>
+        <span>
+            <a href="#" class="btn btn-sm rounded-pill btn-${color}">
+                ${nombre}
+            </a>
+        </span>`;
+
+    const cardsMateriasInicio = document.getElementById('card-materias-inicio');
+    if (cardsMateriasInicio) {
+        cardsMateriasInicio.appendChild(materiaPill);
+    } else {
+        console.error('Container de pills de materias no encontrado.');
+    }
+}
 
 function obtenerModalIdDinamico(nombre) {
     return `modal-${nombre.replace(/\s+/g, '-').toLowerCase()}`;
@@ -25,42 +70,48 @@ function guardarNombreMateria(button) {
     sessionStorage.setItem('modalId', modalId);
 }
 
-function agregarMateria(modalId) {
+function obtenerColorAleatorio() {
     const colores = ['primary', 'secondary', 'success', 'danger', 'warning', 'info'];
     const indiceAleatorio = Math.floor(Math.random() * colores.length);
-    const btnColor = colores[indiceAleatorio];
+    return colores[indiceAleatorio];
+}
+
+
+function agregarMateria(modalId) {
+    const btnColor = obtenerColorAleatorio();
 
     const nombreInput = document.getElementById('nombreMateria');
     const periodoInput = document.getElementById('periodo');
     const creditosInput = document.getElementById('creditos');
+    const profesorInput = document.getElementById('profesor');
 
     const nombre = nombreInput.value;
     const periodo = periodoInput.value;
     const creditos = creditosInput.value;
-    const promedio = calculatePromedio();
+    const profesor = profesorInput.value;
 
     const materiaInfo = {
         modalId: modalId,
         nombre: nombre,
         periodo: periodo,
         creditos: creditos,
-        promedio: promedio
+        profesor: profesor,
+        colorBtn: btnColor,
+        rubros: obtenerRubrosDesdeLocalStorage(modalId), // Nueva línea para obtener los rubros
     };
 
     let materiasList = JSON.parse(sessionStorage.getItem('materiasList')) || {};
-
     materiasList[nombre] = materiasList[nombre] || [];
     materiasList[nombre].push(materiaInfo);
-
     sessionStorage.setItem('materiasList', JSON.stringify(materiasList));
     sessionStorage.setItem('modalId', modalId);
 
     let modal = document.getElementById(modalId);
-    let modalID = sessionStorage.getItem('modalId');
+    let modalID = localStorage.getItem('modalId');
     if (!modal) {
-        modal = crearModal(nombre, modalID, promedio);
+        modal = crearModal(nombre, modalID, profesor);
         document.body.appendChild(modal);
-        agregarRubrosDesdeSessionStorage(modalId);
+        agregarRubrosDesdeLocalStorage(modalId);
     }
 
     var modalInstance = new bootstrap.Modal(document.getElementById(modalId));
@@ -79,7 +130,13 @@ function agregarMateria(modalId) {
     nuevoRubro(nuevoRubroBtn);
 }
 
-function crearModal(nombre, modalId, promedio) {
+// Nueva función para obtener los rubros desde sessionStorage
+function obtenerRubrosDesdeLocalStorage(modalId) {
+    const rubrosMaterias = JSON.parse(sessionStorage.getItem('rubrosMaterias')) || {};
+    return rubrosMaterias[modalId] || [];
+}
+
+function crearModal(nombre, modalId, profesor) {
     const modal = document.createElement('div');
     modal.id = modalId;
     modal.className = 'modal fade';
@@ -97,7 +154,7 @@ function crearModal(nombre, modalId, promedio) {
                 </div>
                 <div class="modal-body"></div>
                 <div class="modal-footer justify-content-start">
-                    <p><strong>Promedio: </strong>${promedio}</p><br>
+                    <p><strong>Profesor: </strong>${profesor}</p><br>
                     <button class="btn btn-warning-outline float-right" data-bs-toggle="modal" data-bs-target="#editarMateria" onclick=abrirModalEdicion()>
                     <i class='bx bx-edit'></i> Editar
                     </button>
@@ -109,6 +166,9 @@ function crearModal(nombre, modalId, promedio) {
         </div>
      </div>
     `;
+
+    const modalMaterias = document.getElementById('modal-materias');
+    modalMaterias.appendChild(modal);
 
     return modal;
 }
@@ -131,6 +191,7 @@ function crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId) {
         </div>
     `;
 
+    document.getElementById('container-materias').appendChild(nuevaMateria);
     return nuevaMateria;
 }
 
@@ -145,20 +206,18 @@ function nuevoRubro(button) {
 
     const rubroActual = { rubro: rubroInputValue, valor: valorInputValue };
 
-    let rubrosObject = JSON.parse(sessionStorage.getItem('rubrosObject')) || {};
-
-    rubrosObject[modalId] = rubrosObject[modalId] || [];
-    rubrosObject[modalId].push(rubroActual);
-
-    sessionStorage.setItem('rubrosObject', JSON.stringify(rubrosObject));
+    let rubrosMaterias = JSON.parse(sessionStorage.getItem('rubrosMaterias')) || {};
+    rubrosMaterias[modalId] = rubrosMaterias[modalId] || [];
+    rubrosMaterias[modalId].push(rubroActual);
+    sessionStorage.setItem('rubrosMaterias', JSON.stringify(rubrosMaterias));
 
     document.getElementById('rubro-0').value = '';
     document.getElementById('valor-rubro-0').value = '';
 }
 
-function agregarRubrosDesdeSessionStorage(modalId) {
-    const rubrosObject = JSON.parse(sessionStorage.getItem('rubrosObject')) || {};
-    const rubrosArray = rubrosObject[modalId] || [];
+function agregarRubrosDesdeLocalStorage(modalId) {
+    const rubrosMaterias = JSON.parse(sessionStorage.getItem('rubrosMaterias')) || {};
+    const rubrosArray = rubrosMaterias[modalId] || [];
 
     let modalID = sessionStorage.getItem('modalId');
     const modal = document.getElementById(modalID);
@@ -184,16 +243,6 @@ function agregarRubrosDesdeSessionStorage(modalId) {
     }
 }
 
-function calculatePromedio() {
-    let promedio = "Aqui va el promedio"
-
-    return promedio;
+function agregarMateriaAHorario() {
+    //obtengo los valores de las materias    
 }
-
-// agregar materia y toda la info al inicio de la pagina 
-// agregar materia al menu de editar horario (para poder agregarlo a este)
-
-
-
-
-// 

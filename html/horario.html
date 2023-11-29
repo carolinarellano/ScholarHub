@@ -181,8 +181,8 @@
                                     <td id="horario-l-7am"></td>
                                     <td id="horario-m-7am"></td>
                                     <td id="horario-mi-7am">
-                                      <div id="materia">
-                                        <span id="materiaInfo">
+                                      <div class="materia-button">
+                                        <span class="materia-button-info">
                                           Créditos: 4<br>
                                           Profesor: Dorx
                                         </span>
@@ -200,8 +200,8 @@
                                 <tr>
                                     <th scope="row">9 am</th>
                                     <td id="horario-l-9am">
-                                      <div id="materia">
-                                        <span id="materiaInfo">
+                                      <div class="materia-button">
+                                        <span class="materia-button-info">
                                           Créditos: 8<br>
                                           Profesor: Miriam
                                         </span>
@@ -214,8 +214,8 @@
                                       </div>                              
                                     </td>
                                     <td id="horario-m-9am">
-                                      <div id="materia">
-                                        <span id="materiaInfo">
+                                      <div class="materia-button">
+                                        <span class="materia-button-info">
                                           Créditos: 8<br>
                                           Profesor: Gaticx
                                         </span>
@@ -227,8 +227,8 @@
                                         </span>                                        
                                       </div>
                                     <td id="horario-mi-9am">
-                                      <div id="materia">
-                                        <span id="materiaInfo">
+                                      <div class="materia-button">
+                                        <span class="materia-button-info">
                                           Créditos: 8<br>
                                           Profesor: Miriam
                                         </span>
@@ -241,8 +241,8 @@
                                       </div>
                                     </td>
                                     <td id="horario-j-9am">
-                                      <div id="materia">
-                                        <span id="materiaInfo">
+                                      <div class="materia-button">
+                                        <span class="materia-button-info">
                                           Créditos: 8<br>
                                           Profesor: Gaticx
                                         </span>
@@ -260,8 +260,8 @@
                                     <th scope="row">11 am</th>
                                     <td id="horario-l-11am"></td>
                                     <td id="horario-m-11am"> 
-                                      <div id="materia">
-                                        <span id="materiaInfo">
+                                      <div class="materia-button">
+                                        <span class="materia-button-info">
                                           Créditos: 8<br>
                                           Profesor: Dorx
                                         </span>
@@ -275,8 +275,8 @@
                                     </td>
                                     <td id="horario-mi-11am"></td>
                                     <td id="horario-j-11am">
-                                      <div id="materia">
-                                        <span id="materiaInfo">
+                                      <div class="materia-button">
+                                        <span class="materia-button-info">
                                           Créditos: 8<br>
                                           Profesor: Dorx
                                         </span>
@@ -310,8 +310,8 @@
                                     <th scope="row">6 pm</th>
                                     <td id="horario-l-6pm"></td>
                                     <td id="horario-m-6pm">
-                                      <div id="materia">
-                                        <span id="materiaInfo">
+                                      <div class="materia-button">
+                                        <span class="materia-button-info">
                                           Créditos: 8<br>
                                           Profesor: Juan Pablo
                                         </span>
@@ -325,8 +325,8 @@
                                     </td>
                                     <td id="horario-mi-6pm"></td>
                                     <td id="horario-j-6pm">
-                                      <div id="materia">
-                                        <span id="materiaInfo">
+                                      <div class="materia-button">
+                                        <span class="materia-button-info">
                                           Créditos: 8<br>
                                           Profesor: Juan Pablo
                                         </span>
@@ -523,6 +523,7 @@
               <p><strong>Examenes:</strong> 10% </p>
             </div>
             <div class="modal-footer justify-content-start">
+              <p><strong>Profesor: </strong>Dorx</p><br>
               <button class="btn btn-warning-outline float-right" data-bs-toggle="modal" data-bs-target="#editarMateria" onclick=abrirModalEdicion()>
                 <i class='bx bx-edit'></i> Editar
               </button>
@@ -550,6 +551,7 @@
               <p><strong>Proyecto:</strong> 20%</p>
             </div>
             <div class="modal-footer justify-content-start">
+              <p><strong>Profesor: </strong>Gaticx</p><br>
               <button class="btn btn-warning-outline float-right" data-bs-toggle="modal" data-bs-target="#editarMateria">
                 <i class='bx bx-edit'></i> Editar
               </button>
@@ -576,6 +578,7 @@
               <p><strong>Mini-proyectos:</strong> 30%</p>
             </div>
             <div class="modal-footer justify-content-start">
+              <p><strong>Profesor: </strong>Miriam</p><br>
               <button class="btn btn-warning-outline float-right" data-bs-toggle="modal" data-bs-target="#editarMateria">
                 <i class='bx bx-edit'></i> Editar
               </button>
@@ -604,6 +607,7 @@
               <p><strong>Proyecto final:</strong> 20% </p>
             </div>
             <div class="modal-footer justify-content-start">
+              <p><strong>Profesor: </strong>Juanpablo</p><br>
               <button class="btn btn-warning-outline float-right" data-bs-toggle="modal" data-bs-target="#editarMateria">
                 <i class='bx bx-edit'></i> Editar
               </button>
@@ -631,6 +635,7 @@
               <p><strong>Proyecto final:</strong> 20% </p>
             </div>
             <div class="modal-footer justify-content-start">
+              <p><strong>Profesor: </strong>Dorx</p><br>
               <button class="btn btn-warning-outline float-right" data-bs-toggle="modal" data-bs-target="#editarMateria">
                 <i class='bx bx-edit'></i> Editar
               </button>
@@ -643,7 +648,6 @@
         </div>
       </div>
     </div>
-    
 
     <!--Modal para agregar nueva materia-->
     <div class="modal fade" id="agregarmateria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -671,6 +675,12 @@
                         </div>
                       </div>
                       <br>
+                      <!--Nombre profesor-->
+                      <div class="form-group">
+                        <label for="profesor">Profesor:</label>
+                        <input type="text" class="form-control" id="profesor" placeholder="Ingrese el nombre del Profesor" name="profesor" required>
+                    </div>
+                    <br>
                       <!-- Número de créditos -->
                       <div class="form-group">
                           <label for="creditos">Número de Créditos:</label>

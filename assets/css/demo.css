@@ -112,15 +112,14 @@
   margin-top: 1rem;
 }
 
-#materia {
+.materia-button {
   position: relative;
   cursor: pointer;
   padding: 2px;
   font-size: x-small;
-
 }
 
-#materiaInfo {
+.materia-button-info {
   position: absolute;
   left: 70px;
   top: 0%;
@@ -134,14 +133,14 @@
   transition: opacity 0.5s ease;
 }
 
-#materiaInfo::before {
+.materia-button-info::before {
   content: "";
   position: absolute;
   top: 50px;
   transform: translateX(-50%);
 }
 
-#materia:hover #materiaInfo {
+.materia-button:hover .materia-button-info {
   top: -160%;
   visibility: visible;
   opacity: 1;
