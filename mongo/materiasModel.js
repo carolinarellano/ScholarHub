@@ -3,9 +3,10 @@ const { Schema, model } = require('mongoose');
 const materiaSchema = new Schema({
     nombre: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
-    codigo: {
+    profesor: {
         type: String,
         required: true
     },

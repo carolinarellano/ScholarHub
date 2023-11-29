@@ -9,6 +9,7 @@ function iniciarSesion() {
 
     const usuario = document.getElementById('username').value;
     const password = document.getElementById('password').value;
+    const animation = document.getElementById('login_animation');
 
     if (!usuario || !password) {
         alert("Ingresa tus datos correctamente.");
@@ -17,6 +18,8 @@ function iniciarSesion() {
 
     console.log(usuario);
     console.log(password);
+
+    animation.style.display = 'block';
 
     fetch('http://localhost:3000/html/ingresar', {
         method: 'POST',
@@ -35,7 +38,9 @@ function iniciarSesion() {
             alert("Usuario o contraseña incorrectos.");
         }
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+        console.log(err)
+    });
 }
 
 /*document.getElementById('cerrarSesion').addEventListener('click', function() {

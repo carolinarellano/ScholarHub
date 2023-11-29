@@ -14,6 +14,7 @@ router.route('/tareas')
     })
     .post((req, res) => {
         try {
+            console.log(req.body);
             const tarea = new tareasModel(req.body);
             tarea.save();
         }

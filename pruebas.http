@@ -14,5 +14,13 @@ Content-Type: application/json
 ###
 
 ###
-GET http://localhost:3000/users/diegorozco/diegorozco
+POST http://localhost:3000/horario
+Content-Type: application/json
+
+{
+    "nombre": "Admin Redes",
+    "profesor": "Miriam",
+    "creditos": 8,
+    "periodo": "Primavera 2024"
+}
 ###

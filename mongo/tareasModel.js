@@ -18,10 +18,6 @@ const tareaSchema = new Schema({
         ref: 'Materia',
         required: true
     },
-    calificacion: {
-        type: Number,
-        required: false
-    },
     categoria: {
         type: String,
         required: true
