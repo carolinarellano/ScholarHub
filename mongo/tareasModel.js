@@ -14,8 +14,7 @@ const tareaSchema = new Schema({
         required: true
     },
     materia: {
-        type: Schema.Types.ObjectId,
-        ref: 'Materia',
+        type: String,
         required: true
     },
     categoria: {

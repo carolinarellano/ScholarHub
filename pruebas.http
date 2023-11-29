@@ -18,9 +18,15 @@ POST http://localhost:3000/horario
 Content-Type: application/json
 
 {
-    "nombre": "Admin Redes",
-    "profesor": "Miriam",
+    "nombre": "Estrategias Algorítmicas",
+    "profesor": "Luis Gatica",
     "creditos": 8,
-    "periodo": "Primavera 2024"
+    "rubros": [{"Examenes": 40}, {"Tareas": 60}],
+    "periodo": "Primavera 2024",
+    "horario": [{"Lunes": 9}, {"Miercoles": 9}]
 }
+###
+
+###
+GET http://localhost:3000/horario
 ###

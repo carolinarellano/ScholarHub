@@ -8,6 +8,7 @@ const usuariosModel = require('../mongo/usuariosModel');
 router.get('/users', async (req, res) => {
     try {
         const usuarios = await usuariosModel.find();
+        console.log(usuarios);
         res.status(200).json(usuarios);
     } catch (error) {
         res.status(500).send("No se encontraron usuarios");

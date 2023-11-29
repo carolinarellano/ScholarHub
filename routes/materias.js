@@ -6,8 +6,15 @@ const materiaModel = require('../mongo/materiasModel');
 router.route('/horario')
     .get((req, res) => {
         try {
-            const materia = materiaModel.find({});
-            res.status(200).json(materia);
+            materiaModel.find()
+                .then(materia => {
+                    console.log(materia);
+                    res.status(200).json(materia);
+                })
+                .catch(err => {
+                    console.error(err);
+                    res.status(500).send("No se puede obtener la materia solicitada");
+                });
         } catch (error) {
             res.status(500).send("No se puede obtener la materia solicitada");
         }

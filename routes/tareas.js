@@ -2,25 +2,32 @@ const express = require('express');
 const router = express.Router();
 
 const tareasModel = require('../mongo/tareasModel');
+const materiaModel = require('../mongo/materiasModel');
 
 router.route('/tareas')
-    .get((req, res) => {
+    .get(async (req, res) => {
         try {
-            const tarea = tareasModel.find({});
+            const tarea = await tareasModel.find({});
             res.status(200).json(tarea);
         } catch (error) {
             res.status(500).send("No se puede acceder a la tarea solicitada");
         }
     })
     .post((req, res) => {
-        try {
-            console.log(req.body);
-            const tarea = new tareasModel(req.body);
-            tarea.save();
-        }
-        catch (error) {
-            res.status(500).send("No se puede crear la tarea")
-        }
+        materiaModel.findOne({ nombre: req.body.materia })
+            .then(materia => {
+                const tarea = new tareasModel({
+                    ...req.body,
+                    materia: materia._id
+                });
+                tarea.save()
+                    .then(() => res.status(201).json('Tarea creada!'))
+                    .catch(err => res.status(500).json('Error: ' + err));
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send("Error al buscar la materia");
+            });
     });
 
 router.route('tareas/:id')

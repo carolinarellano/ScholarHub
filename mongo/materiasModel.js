@@ -4,7 +4,6 @@ const materiaSchema = new Schema({
     nombre: {
         type: String,
         required: true,
-        unique: true
     },
     profesor: {
         type: String,
@@ -14,11 +13,15 @@ const materiaSchema = new Schema({
         type: Number,
         required: true
     },
-    horario: {
+    rubros: {
         type: Array,
         required: true
     },
-    ponderaciones: {
+    periodo: {
+        type: String,
+        requiered: true
+    },
+    horario: {
         type: Array,
         required: true
     }
