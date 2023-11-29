@@ -1,3 +1,5 @@
+const ejs = require('ejs');
+
 document.addEventListener('DOMContentLoaded', function () {
     cargarMateriasAlmacenadas();
 
@@ -13,8 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
 function cargarMateriasAlmacenadas() {
     let materiasList = JSON.parse(sessionStorage.getItem('materiasList'));
 
-    debugger;
-
     if (materiasList) {
         Object.keys(materiasList).forEach(nombre => {
             const materiaData = materiasList[nombre][0];
@@ -27,6 +27,8 @@ function cargarMateriasAlmacenadas() {
 
             crearPill(nombre, pillId, creditos, profesor, color);
             let tarjetaMateria = crearTarjetaMateria(nombre, periodo, creditos, color, modalId);
+
+            let container = document.getElementById('container-materias');
             container.append(tarjetaMateria);
         });
     }
@@ -55,19 +57,12 @@ function crearPill(nombre, pillId, creditos, profesor, color) {
     }
 }
 
-function obtenerModalIdDinamico(nombre) {
-    return `modal-${nombre.replace(/\s+/g, '-').toLowerCase()}`;
-}
-
 function guardarNombreMateria(button) {
     const nombre = document.getElementById('nombreMateria').value;
     if (!nombre) {
         alert("Por favor, ingrese el nombre de la materia antes de guardar.");
         return;
     }
-
-    const modalId = obtenerModalIdDinamico(nombre);
-    sessionStorage.setItem('modalId', modalId);
 }
 
 function obtenerColorAleatorio() {
@@ -104,7 +99,6 @@ function agregarMateria(modalId) {
     materiasList[nombre] = materiasList[nombre] || [];
     materiasList[nombre].push(materiaInfo);
     sessionStorage.setItem('materiasList', JSON.stringify(materiasList));
-    sessionStorage.setItem('modalId', modalId);
 
     let modal = document.getElementById(modalId);
     let modalID = localStorage.getItem('modalId');
@@ -136,8 +130,9 @@ function obtenerRubrosDesdeLocalStorage(modalId) {
     return rubrosMaterias[modalId] || [];
 }
 
-function crearModal(nombre, modalId, profesor) {
+function mostrarModal(materia) {
     const modal = document.createElement('div');
+    const modalId = 'modal-' + materia.id; // Asigna un ID único para cada modal
     modal.id = modalId;
     modal.className = 'modal fade';
     modal.tabIndex = "-1";
@@ -145,33 +140,40 @@ function crearModal(nombre, modalId, profesor) {
     modal.setAttribute("aria-labelledby", "exampleModalLabel");
     modal.setAttribute("aria-hidden", "true");
 
-    modal.innerHTML = `
+    // Define el template EJS para el contenido del modal
+    const modalTemplate = `
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="${modalId}">${nombre}</h5>
+                    <h5 class="modal-title" id="<%= modalId %>"><%= materia.nombre %></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body"></div>
+                <div class="modal-body">
+                    <p><strong>Profesor: </strong><%= materia.profesor %></p><br>
+                    <!-- Agrega aquí cualquier otra información específica de la materia -->
+                </div>
                 <div class="modal-footer justify-content-start">
-                    <p><strong>Profesor: </strong>${profesor}</p><br>
-                    <button class="btn btn-warning-outline float-right" data-bs-toggle="modal" data-bs-target="#editarMateria" onclick=abrirModalEdicion()>
-                    <i class='bx bx-edit'></i> Editar
+                    <button class="btn btn-warning-outline float-right" data-bs-toggle="modal" data-bs-target="#editarMateria" onclick="abrirModalEdicion(<%= materia.id %>)">
+                        <i class='bx bx-edit'></i> Editar
                     </button>
-                    <button class="btn btn-danger-outline float-right btn-eliminar-materia" onclick=eliminarMateria(this)>
+                    <button class="btn btn-danger-outline float-right btn-eliminar-materia" onclick="eliminarMateria(<%= materia.id %>)">
                         <i class="bx bx-trash"></i> Eliminar
                     </button>
                     <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="modal">Cerrar</button>
                 </div>
+            </div>
         </div>
-     </div>
     `;
+
+    // Renderiza el template EJS con la información de la materia
+    const renderedModal = ejs.render(modalTemplate, { modalId, materia });
+
+    modal.innerHTML = renderedModal;
 
     const modalMaterias = document.getElementById('modal-materias');
     modalMaterias.appendChild(modal);
-
-    return modal;
 }
+
 
 function crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId) {
     const nuevaMateria = document.createElement('div');
