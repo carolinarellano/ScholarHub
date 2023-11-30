@@ -75,7 +75,7 @@
             <div class="card-body">
               <!-- Logo -->
               <div class="app-brand justify-content-center">
-                <a href="inicio.html" class="app-brand-link gap-2">
+                <a class="app-brand-link gap-2">
                   <span>scholar hub</span>
                 </a>
               </div>
@@ -83,28 +83,28 @@
               <h4 class="mb-2">Aquí empieza tu mejor versión 🚀</h4>
               <p class="mb-4">¡Maneja tu vida escolar de manera organizada y divertida!</p>
 
-              <form id="formAuthentication" class="mb-3" action="inicio.html" method="POST">
+              <form id="formAuthenticationReg" class="mb-3">
                 <div class="mb-3">
                   <label for="username" class="form-label">Usuario</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="username"
-                    name="username"
+                    id="usernameReg"
+                    name="usuario"
                     placeholder="Ingresa tu usuario"
                     autofocus
                   />
                 </div>
                 <div class="mb-3">
                   <label for="email" class="form-label">Correo</label>
-                  <input type="text" class="form-control" id="email" name="email" placeholder="Ingresa tu correo" />
+                  <input type="text" class="form-control" id="emailReg" name="email" placeholder="Ingresa tu correo" />
                 </div>
                 <div class="mb-3 form-password-toggle">
-                  <label class="form-label" for="password">Constraseña</label>
+                  <label class="form-label" for="password">Contraseña</label>
                   <div class="input-group input-group-merge">
                     <input
                       type="password"
-                      id="password"
+                      id="passwordReg"
                       class="form-control"
                       name="password"
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
@@ -123,12 +123,12 @@
                     </label>
                   </div>
                 </div>
-                <button class="btn btn-primary d-grid w-100">Registrarse</button>
+                <button id="signup" class="btn btn-primary d-grid w-100" type="submit">Registrarse</button>
               </form>
 
               <p class="text-center">
                 <span>¿Ya tienes una cuenta?</span>
-                <a href="ingresar.html">
+                <a href="/html/ingresar">
                   <span>Ingresa ahora</span>
                 </a>
               </p>
@@ -160,5 +160,6 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="../functions/users_signup.js"></script>
   </body>
 </html>

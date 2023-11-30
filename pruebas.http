@@ -1,0 +1,80 @@
+###
+GET http://localhost:3000/users
+###
+
+###
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "usuario": "diego",
+    "email": "diego.orozco@correo.mx",
+    "password": "diego"
+}
+###
+
+###
+POST http://localhost:3000/horario
+Content-Type: application/json
+
+{
+    "nombre": "Prueba",
+    "profesor": "Prueba",
+    "creditos": 8,
+    "rubros": [{"Practicas": 30}, {"Tareas": 25}, {"Proyecto": 45}],
+    "periodo": "Prueba",
+    "horario": [{"Martes": 11}, {"Jueves": 11}]
+}
+###
+
+###
+POST http://localhost:3000/tareas 
+Content-Type: application/json
+
+{
+    "nombre": "Evaluacion Asincrona",
+    "materia": "Estrategias Algorítmicas",
+    "categoria": "Tarea",
+    // fecha de entrega como tipo date
+    "fechaEntrega": "2021-05-20",
+    "descripcion": "Resolver 2 problemas adjuntos ..."
+}
+###
+
+###
+GET http://localhost:3000/tareas
+###
+
+###
+PUT http://localhost:3000/tareas/656818a241a54db3692d65a2
+Content-Type: application/json
+
+{
+    "nombre": "probando",
+    "materia": "probando",
+    "categoria": "Proyecto",
+    // fecha de entrega como tipo date
+    "fechaEntrega": "2021-05-20",
+    "descripcion": "probando"
+}
+###
+
+###
+GET http://localhost:3000/tareas/656818a241a54db3692d65a2
+###
+
+###
+DELETE http://localhost:3000/tareas/656818a241a54db3692d65a2
+###
+
+
+###
+POST http://localhost:3000/horario/agregar-materia
+Content-Type: application/json
+
+{
+  "nombreMateria": "Desarrollo de Aplicaciones",
+  "hora": "9am",
+  "diasSemana": ["l", "mi", "v"]
+}
+
