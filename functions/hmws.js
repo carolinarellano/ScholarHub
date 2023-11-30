@@ -71,7 +71,7 @@ async function agregarTarea() {
     });
 
     if (!response.ok) {
-        console.error('Error adding tarea:', response.statusText);
+        console.error('Error al agregar tarea:', response.statusText);
     }
     
 }

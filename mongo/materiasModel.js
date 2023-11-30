@@ -23,7 +23,7 @@ const materiaSchema = new Schema({
     },
     horario: {
         type: Array,
-        required: true
+        required: false
     }
 });
 

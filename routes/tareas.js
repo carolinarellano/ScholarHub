@@ -8,7 +8,6 @@ router.route('/tareas')
     .get(async (req, res) => {
         try {
             const tarea = await tareasModel.find({});
-            console.log(tarea);
             res.status(200).json(tarea);
         } catch (error) {
             res.status(500).send("No se puede acceder a la tarea solicitada");
@@ -21,6 +20,7 @@ router.route('/tareas')
                     ...req.body,
                     materia: materia._id
                 });
+                console.log("Tarea creada con éxito.");
                 tarea.save()
                     .then(() => res.status(201).json('Tarea creada!'))
                     .catch(err => res.status(500).json('Error: ' + err));

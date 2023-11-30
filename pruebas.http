@@ -18,11 +18,11 @@ POST http://localhost:3000/horario
 Content-Type: application/json
 
 {
-    "nombre": "Desarrollo de Aplicaciones y Servicios Web",
-    "profesor": "Ulises Tejeda",
+    "nombre": "Prueba",
+    "profesor": "Prueba",
     "creditos": 8,
     "rubros": [{"Practicas": 30}, {"Tareas": 25}, {"Proyecto": 45}],
-    "periodo": "Primavera 2024",
+    "periodo": "Prueba",
     "horario": [{"Martes": 11}, {"Jueves": 11}]
 }
 ###
