@@ -1,12 +1,13 @@
 const express = require('express');
 require('./database');
 const cors = require('cors');
-const { default: mongoose } = require('mongoose');
+const mongoose = require('mongoose');
 const path = require('path');
 const app = express();
 const usuariosRoutes = require('./routes/usuarios');
 const materiasRoutes = require('./routes/materias');
 const tareasRoutes = require('./routes/tareas');
+const horarioRoutes = require('./routes/horarios');
 const port = 3000;
 
 //Middlewares
@@ -23,6 +24,7 @@ app.use('/functions', express.static(path.join(__dirname, 'functions')));
 app.use(usuariosRoutes);
 app.use(materiasRoutes);
 app.use(tareasRoutes);
+app.use(horarioRoutes);
 
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname + '/html/ingresar.html'))

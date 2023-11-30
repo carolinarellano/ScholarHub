@@ -5,7 +5,7 @@ const materiaSchema = new Schema({
         type: String,
         required: true
     },
-    codigo: {
+    periodo: {
         type: String,
         required: true
     },
@@ -13,14 +13,18 @@ const materiaSchema = new Schema({
         type: Number,
         required: true
     },
-    horario: {
-        type: Array,
+    profesor: {
+        type: String,
         required: true
     },
-    ponderaciones: {
-        type: Array,
+    colorBtn: {
+        type: String,
+        required: true
+    },
+    rubros: {
+        type: Array,  
         required: true
     }
 });
 
-module.exports = model('Materias', materiaSchema);
+module.exports = model('Materia', materiaSchema);

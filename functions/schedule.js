@@ -33,7 +33,7 @@ function cargarMateriasAlmacenadas() {
             console.log('Color:', color);
 
             try {
-                let tarjetaMateria = crearTarjetaMateria(nombre, periodo, creditos, color, modalId);
+                let tarjetaMateria = crearTarjetaMateria(nombre, periodo, creditos, color, modalId, profesor);
                 let container = document.getElementById('container-materias');
                 container.append(tarjetaMateria);
                 cargarMateriasEnHorario();
@@ -174,10 +174,11 @@ function agregarMateria(modalId) {
     const nuevoRubroBtn = document.getElementById('nuevoRubrobtn');
     nuevoRubro(nuevoRubroBtn);
 
-    crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId);
+    const rubrosArray = obtenerRubrosDesdeLocalStorage(modalId);
+    crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId, profesor);
+    cargarMateriasAlmacenadas();
     cargarMateriasEnSelectHorario();
     cargarMateriasEnSelectActividad();
-    // cargarMateriasEnHorario();
 }
 
 
@@ -188,7 +189,7 @@ function obtenerRubrosDesdeLocalStorage(modalId) {
     return rubrosMaterias[modalId] || [];
 }
 
-function crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId) {
+function crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId, profesor) {
     const nuevaMateria = document.createElement('div');
     nuevaMateria.className = 'card p-0';
     nuevaMateria.style.margin = '10px';
@@ -200,10 +201,9 @@ function crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId) {
         <div class="card-body">
             <h6 class="card-text"><strong>Periodo: </strong><span>${periodo}</span></h6>
             <h6 class="card-text"><strong>Créditos: </strong><span>${creditos}</span></h6>
+            <p class="card-text"><strong>Profesor: </strong>${profesor}</p>
         </div>
-        <div class="card-footer">
-            <a href="#" class="btn btn-${btnColor} btn-editar-materia" data-bs-toggle="modal" data-bs-target="#modal1">Ver detalles</a>
-        </div>
+        <div class="card-footer"></div>
     `;
 
     document.getElementById('container-materias').appendChild(nuevaMateria);
@@ -213,6 +213,14 @@ function crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId) {
 
     return nuevaMateria;
 }
+
+function obtenerRubrosComoTexto(rubrosArray) {
+    if (!rubrosArray || rubrosArray.length === 0) {
+        return 'Ningún rubro agregado';
+    }
+    return rubrosArray.map(rubro => `${rubro.rubro}: ${rubro.valor}%`).join(', ');
+}
+
 
 function nuevoRubro(button) {
     const nombreMateriaInput = document.getElementById('nombreMateria');
@@ -376,6 +384,7 @@ function cargarMateriasEnHorario() {
                     </a>
                 </span>`;
 
+            // Vaciar la celda antes de agregar la nueva materia
             if (cellToAdd) {
                 cellToAdd.innerHTML = '';
             } else {
@@ -398,5 +407,6 @@ function cargarMateriasEnHorario() {
     } else {
         console.error('No se encontraron datos para la materia seleccionada.');
     }
+
 }
 

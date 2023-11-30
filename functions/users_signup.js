@@ -1,6 +1,7 @@
 document.getElementById('formAuthenticationReg').addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent the default form submission
     registro(); // Call your signup function
+    cerrarSesion();
 });
 
 function registro() {
@@ -30,12 +31,33 @@ function registro() {
             password: password
         }),
     })
-    .then(res => {
-        if (res.status == 201) {
-            window.location.href = '/html/inicio';
-        } else {
-            alert("Error al registrar usuario.");
-        }
-    })
-    .catch(err => console.log(err));
+        .then(res => {
+            if (res.status == 201) {
+                window.location.href = '/html/inicio';
+            } else {
+                alert("Error al registrar usuario.");
+            }
+        })
+        .catch(err => console.log(err));
+}
+
+function cerrarSesion() {
+    const button = document.getElementById('cerrarSesion');
+
+    button.addEventListener('click', () => {
+        fetch('http://localhost:3000/html/inicio', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(res => {
+                if (res.status == 200) {
+                    window.location.href = '/html/ingresar';
+                } else {
+                    alert("Error al cerrar sesión.");
+                }
+            })
+            .catch(err => console.log(err));
+    });
 }

@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault(); // Evita que se envíe el formulario automáticamente
         abrirModalAgregarTarea();
     });
+    getTareas();
 });
 
 function abrirModalAgregarTarea() {
@@ -21,7 +22,7 @@ function obtenerCardIdDinamico(nombre) {
     return `card-${nombre.replace(/\s+/g, '-').toLowerCase()}`;
 }
 
-function agregarTarea() {
+async function agregarTarea() {
     const colores = ['primary', 'secondary', 'success', 'danger', 'warning', 'info'];
     const indiceAleatorio = Math.floor(Math.random() * colores.length);
     const badgeColor = colores[indiceAleatorio];
@@ -51,6 +52,28 @@ function agregarTarea() {
     // Cierra el modal después de agregar la tarea
     const modalAgregarTarea = new bootstrap.Modal(document.getElementById('modalAgregarTarea'));
     modalAgregarTarea.hide();
+
+    const tarea = {
+        nombre: nombreActividad,
+        materia: opcionesMateria,
+        categoria: opcionesCategoria,
+        fechaEntrega: fechaEntrega,
+        descripcion: detallesExtra
+    }
+
+    // Send a POST request to the server
+    const response = await fetch('http://localhost:3000/tareas', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(tarea)
+    });
+
+    if (!response.ok) {
+        console.error('Error al agregar tarea:', response.statusText);
+    }
+
 }
 
 function crearModalActividad(id, nombreActividad, materiaSeleccionada, categoriaSeleccionada, fechaEntrega, detallesExtra, color) {
@@ -69,10 +92,10 @@ function crearModalActividad(id, nombreActividad, materiaSeleccionada, categoria
                 <small>
                     <p id="fechaEntrega"><b>Fecha: </b>${fechaEntrega}</p>
                 </small>
-                <button class="btn btn-warning-outline float-right" onclick="editCard(this)" data-bs-toggle="modal" data-bs-target="#modalEditarTarea">
+                <button class="btn btn-warning-outline float-right" onclick="editarTarea(this.parentElement.parentElement.parentElement.id)" data-bs-toggle="modal" data-bs-target="#modalEditarTarea">
                     <i class='bx bx-edit'></i> Editar
                 </button>
-                <button class="btn btn-danger-outline float-right" onclick="deleteCard(this)">
+                <button class="btn btn-danger-outline float-right" onclick="eliminarTarea(this.parentElement.parentElement.parentElement.id)">
                     <i class="bx bx-trash"></i> Eliminar
                 </button>
             </div>
@@ -86,7 +109,7 @@ function crearModalActividad(id, nombreActividad, materiaSeleccionada, categoria
     return nuevaTarea;
 }
 
-function editarTarea() {
+async function editarTarea(id) {
     let nombreActividad = nombreActividad.value;
     let opcionesMateria = opcionesMateria.options[opcionesMateriaInput.selectedIndex]?.value;
     let opcionesCategoria = opcionesCategoria.value;
@@ -98,14 +121,56 @@ function editarTarea() {
         return;
     }
 
-    const cardActividadId = obtenerCardIdDinamico(nombreActividad);
-    crearModalActividad(cardActividadId, nombreActividad, opcionesMateria, opcionesCategoria, fechaEntrega, detallesExtra, badgeColor);
-    if (cardActividadId === null) {
-        alert('No se ha encontrado la tarea');
-        return;
+    const tarea = {
+        nombre: nombreActividad,
+        materia: opcionesMateria,
+        categoria: opcionesCategoria,
+        fechaEntrega: fechaEntrega,
+        descripcion: detallesExtra
+    };
+
+    const response = await fetch(`http://localhost:3000/tareas/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(tarea),
+    });
+
+    if (!response.ok) {
+        const message = `An error has occured: ${response.status}`;
+        throw new Error(message);
     }
 
-    // Cierra el modal después de agregar la tarea
     const modalEditarTarea = new bootstrap.Modal(document.getElementById('modalEditarTarea'));
     modalEditarTarea.hide();
+}
+
+async function eliminarTarea(id) {
+    const response = await fetch(`http://localhost:3000/tareas/${id}`, {
+        method: 'DELETE',
+    });
+
+    if (!response.ok) {
+        const message = `An error has occured: ${response.status}`;
+        throw new Error(message);
+    }
+}
+
+function getTareas() {
+    // GET the elements from /tareas and display them in the HTML
+    fetch('http://localhost:3000/tareas')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(tarea => {
+                const cardActividadId = obtenerCardIdDinamico(tarea.nombre);
+                // Format the date
+                const fechaEntrega = new Date(tarea.fechaEntrega);
+                const formattedDate = `${fechaEntrega.getDate()}/${fechaEntrega.getMonth() + 1}/${fechaEntrega.getFullYear()}`;
+                // Display the subject name instead of the ID
+                crearModalActividad(cardActividadId, tarea.nombre, tarea.materia.nombre, tarea.categoria, formattedDate, tarea.descripcion, 'primary');
+                console.log(tarea.materia.nombre)
+            });
+        })
+        .catch(error => console.error('Error al obtener tareas:', error));
 }

@@ -1,359 +1,291 @@
 <!DOCTYPE html>
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../assets/"
+  data-template="vertical-menu-template-free">
 
-<!-- =========================================================
-* Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
-==============================================================
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-* Product Page: https://themeselection.com/products/sneat-bootstrap-html-admin-template/
-* Created by: ThemeSelection
-* License: You must have a valid license purchased in order to legally use the theme for your project.
-* Copyright ThemeSelection (https://themeselection.com)
+  <title>scholar hub</title>
+  <meta name="description" content="" />
 
-=========================================================
- -->
-<!-- beautify ignore:start -->
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
+  <link type="image/png" sizes="32x32" rel="icon" href=".../icons8-journal-32.png">
 
-<html
-  lang="en"
-  class="light-style layout-menu-fixed"
-  dir="ltr"
-  data-theme="theme-default"
-  data-assets-path="../assets/"
-  data-template="vertical-menu-template-free"
->
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
-    
-    <title>scholar hub</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.19.0/font/bootstrap-icons.css" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
 
-    <meta name="description" content="" />
+  <!-- Icons -->
+  <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
-    <link type="image/png" sizes="32x32" rel="icon" href=".../icons8-journal-32.png">
-    
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="../assets/css/demo.css" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.19.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-    <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
+  <!-- Helpers -->
+  <script src="../assets/vendor/js/helpers.js"></script>
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../assets/css/demo.css"/>
+  <!-- Theme config files and customizations -->
+  <script src="../assets/js/config.js"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+</head>
 
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-
-    <!-- Page CSS -->
-
-    <!-- Helpers -->
-    <script src="../assets/vendor/js/helpers.js"></script>
-
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../assets/js/config.js"></script>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-  </head>
-
-  <body>
-    <!-- Layout wrapper -->
-    <div class="layout-wrapper layout-content-navbar">
-      <div class="layout-container">
-        <!-- Menu -->
-        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-          <div class="app-brand demo">
-            <a href="/html/inicio" class="app-brand-link">
-              <span class="app-brand-logo demo">
+<body>
+  <!-- Layout wrapper -->
+  <div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+      <!-- Menu -->
+      <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+        <!-- App Brand -->
+        <div class="app-brand demo">
+          <a href="/html/inicio" class="app-brand-link">
+            <span class="app-brand-logo demo">
               <span class="app-brand-text demo menu-text fw-bolder ms-2">scholar hub</span>
-            </a>
+            </span>
+          </a>
 
-            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-              <i class="bx bx-chevron-left bx-sm align-middle"></i>
-            </a>
-          </div>
-
-          <div class="menu-inner-shadow"></div>
-
-          <ul class="menu-inner py-1">
-            <!-- Dashboard -->
-            <li class="menu-item">
-              <a href="/html/perfil" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
-                <div data-i18n="Container">Mi Perfil</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="/html/inicio" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Inicio</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="/html/horario" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-time-five"></i>
-                <div data-i18n="Without menu">Horario</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="/html/tareas" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-pencil"></i>
-                <div data-i18n="Container">Tareas</div>
-              </a>
-            </li>
-            </li>            
-        </aside>
-        <!-- / Menu -->
-
-        <!-- Layout container -->
-        <div class="layout-page">
-          <!-- Navbar -->
-
-          <nav
-            class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-            id="layout-navbar"
-          >
-            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-                <i class="bx bx-menu bx-sm"></i>
-              </a>
-            </div>
-
-            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-              <!-- Search -->
-              <div class="navbar-nav align-items-center">
-                <div class="nav-item d-flex align-items-center">
-                  <i class="bx bx-search fs-4 lh-0"></i>
-                  <input
-                    type="text"
-                    class="form-control border-0 shadow-none"
-                    placeholder="Search..."
-                    aria-label="Search..."
-                  />
-                </div>
-              </div>
-              <!-- /Search -->
-            </div>
-          </nav>
-
-          <!-- / Navbar -->
-          <!-- Content wrapper -->
-          <div class="content-wrapper">
-            <!-- Content -->
-            <div class="container-xxl flex-grow-1 container-p-y">
-              <!-- Layout Demo -->
-              <div class="layout-demo-wrapper">
-                <div class="layout-demo-info">
-                  <h1><strong>Tareas</strong></h1>
-                  <p>Aqui se muestran las tareas y actividades</p>
-                </div>
-              </div>
-              <div class="container">
-                <div id="container-tareas" class="row">
-                  <div class="col-md-6 col-lg-4 mb-3">
-                    <div class="card">
-                        <div class="card-header">
-                          <span class="badge bg-label-warning me-1">
-                            Técnicas de Integración de Código
-                          </span>
-                        </div>
-                        <div class="card-body">
-                            <p id="categoria"><small>Examen</small></p>
-                            <h5 class="card-title">Estudiar para el examen</h5>
-                            <p class="card-text">Detalles sobre la tarea.</p>
-                            <small>
-                              <p id="fechaEntrega" class="card-text"><b>Fecha: </b>11/10/2023</p>
-                            </small>
-                            <button class="btn btn-warning-outline float-right" onclick="editCard(this)"  data-bs-toggle="modal" data-bs-target="#modalEditarTarea">
-                              <i class='bx bx-edit'></i> Editar
-                            </button>
-                            <button class="btn btn-danger-outline float-right" onclick="deleteCard(this)">
-                                <i class="bx bx-trash"></i> Eliminar
-                            </button>
-                        </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-lg-4 mb-3">
-                    <div class="card">
-                        <div class="card-header">
-                          <span id="opcionesMateria" class="badge bg-label-danger me-1">
-                            Lenguajes Formales
-                          </span>
-                        </div>
-                        <div class="card-body">
-                            <p id="categoria"><small>Proyecto</small></p>
-                            <h5 id="nombreActividad" class="card-title">Planeación Proyecto final</h5>
-                            <p id="detallesExtra" class="card-text">Detalles sobre la tarea.</p>
-                            <small>
-                              <p id="fechaEntrega" class="card-text"><b>Fecha: </b>11/10/2023</p>
-                            </small>
-                            <button class="btn btn-warning-outline float-right" onclick="editCard(this)" data-bs-toggle="modal" data-bs-target="#modalEditarTarea">
-                              <i class='bx bx-edit'></i> Editar
-                            </button>
-                            <button class="btn btn-danger-outline float-right" onclick="deleteCard(this)">
-                                <i class="bx bx-trash"></i> Eliminar
-                            </button>
-                        </div>
-                    </div>
-                </div>                    
-            </div>
-              <!--/ Layout Demo -->
-              <div class="d-flex justify-content-end">
-                <button class="btn btn-primary" id="abrirModalAgregarTarea" data-bs-toggle="modal" data-bs-target="#modalAgregarTarea">Agregar tarea</button>
-              </div>
-              </div>
-          </div>
+          <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+            <i class="bx bx-chevron-left bx-sm align-middle"></i>
+          </a>
         </div>
-              <!-- Modal agregar tarea -->
-              <div class="modal fade" id="modalAgregarTarea" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">¿Qué es lo que tienes que hacer?</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <form id="tareaform">
-                        <div class="form-group">
-                          <label for="nombreActividad">Nombre de la actividad</label>
-                          <input type="text" class="form-control" id="modal-agregar-nombreActividad">
-                        </div>
-                        <div class="form-group">
-                          <label for="materia">Materia</label>
-                          <select class="form-control" id="modal-agregar-opcionesMateria">
-                            <option>Lenguajes Formales</option>
-                            <option>Desarrollo de Aplicaciones y Servicios Web</option>
-                            <option>Organización y Arquitectura de Computadoras</option>
-                            <option>Técnicas de Integración de Código</option>
-                            <option>Estrategias Algorítmicas</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <label for="categoria">Categoria</label>
-                          <select class="form-control" id="modal-agregar-categoria">
-                            <option>Tarea</option>
-                            <option>Examen</option>
-                            <option>Practica</option>
-                            <option>Proyecto</option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <label for="fechaEntrega">Fecha de entrega</label>
-                          <input type="date" class="form-control" id="modal-agregar-fechaEntrega">
-                        </div>
-                        <div class="form-group">
-                          <label for="detallesExtra">Detalles extra</label>
-                          <input class="form-control" id="modal-agregar-detallesExtra" rows="3"></input>
-                        </div>
-                      </form>
-                    </div>
-                    <div class="modal-footer justify-content-start">
-                      <button id="guardarTareaBtn" type="button" class="btn btn-success" onclick="agregarTarea()">Guardar</button>
-                      <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="modal">Cerrar</button>
-                   </div>
-                  </div>
-                </div>
-              </div>
+        <!-- /App Brand -->
 
-              <!-- Modal editar tarea -->
-              <div id="modal-editar-materias">
-                <div class="modal fade" id="modalEditarTarea" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edita tu tarea</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <form>
-                          <div class="form-group">
-                            <label for="nombreActividad">Nombre de la actividad</label>
-                            <input type="text" class="form-control" id="nombreActividad">
-                          </div>
-                          <div class="form-group">
-                            <label for="materia">Materia</label>
-                            <select class="form-control" id="opcionesMateria">
-                              <option>Lenguajes Formales</option>
-                              <option>Desarrollo de Aplicaciones y Servicios Web</option>
-                              <option>Organización y Arquitectura de Computadoras</option>
-                              <option>Técnicas de Integración de Código</option>
-                              <option>Estrategias Algorítmicas</option>
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <label for="categoria">Categoria</label>
-                            <select class="form-control" id="categoria">
-                              <option>Tarea</option>
-                              <option>Examen</option>
-                              <option>Practica</option>
-                              <option>Proyecto</option>
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <label for="fechaEntrega">Fecha de entrega</label>
-                            <input type="date" class="form-control" id="fechaEntrega">
-                          </div>                    
-                          <div class="form-group">
-                            <label for="detallesExtra">Detalles extra</label>
-                            <textarea class="form-control" id="detallesExtra" rows="3"></textarea>
-                          </div>
-                        </form>
-                      </div>
-                      <div class="modal-footer justify-content-start">
-                        <button type="button" class="btn btn-success">Actualizar</button>
-                        <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="modal">Cerrar</button>
+        <div class="menu-inner-shadow"></div>
+
+        <!-- Menu Items -->
+        <ul class="menu-inner py-1">
+          <li class="menu-item">
+            <a href="/html/perfil" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-user"></i>
+              <div>Mi Perfil</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="/html/inicio" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-home-circle"></i>
+              <div>Inicio</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="/html/horario" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-time-five"></i>
+              <div>Horario</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="/html/tareas" class="menu-link">
+              <i class="menu-icon tf-icons bx bx-pencil"></i>
+              <div>Tareas</div>
+            </a>
+          </li>
+        </ul>
+        <!-- /Menu Items -->
+      </aside>
+      <!-- /Menu -->
+
+      <!-- Layout container -->
+      <div class="layout-page">
+        <!-- Navbar -->
+        <nav
+          class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+          id="layout-navbar">
+          <!-- Layout menu toggle button for smaller screens -->
+          <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+              <i class="bx bx-menu bx-sm"></i>
+            </a>
+          </div>
+
+          <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+            <!-- Search -->
+            <div class="navbar-nav align-items-center">
+              <div class="nav-item d-flex align-items-center">
+                <i class="bx bx-search fs-4 lh-0"></i>
+                <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
+                  aria-label="Search..." />
+              </div>
+            </div>
+            <!-- /Search -->
+          </div>
+        </nav>
+        <!-- /Navbar -->
+
+        <!-- Content wrapper -->
+        <div class="content-wrapper">
+          <!-- Content -->
+          <div class="container-xxl flex-grow-1 container-p-y">
+            <!-- Layout Demo -->
+            <div class="layout-demo-wrapper">
+              <div class="layout-demo-info">
+                <h1><strong>Tareas</strong></h1>
+                <p>Aqui se muestran las tareas y actividades</p>
+              </div>
+            </div>
+            <!-- /Layout Demo -->
+
+            <div class="container">
+              <div id="container-tareas" class="row">
+              </div>
+            </div>
+
+            <!-- Botón para agregar tarea -->
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-primary" id="abrirModalAgregarTarea" data-bs-toggle="modal"
+                data-bs-target="#modalAgregarTarea">Agregar tarea</button>
+            </div>
+            <!-- /Botón para agregar tarea -->
+          </div>
+          <!-- /Content -->
+
+          <!-- Modal para agregar tarea -->
+          <div class="modal fade" id="modalAgregarTarea" tabindex="-1" aria-labelledby="modalAgregarTareaM"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">¿Qué es lo que tienes que hacer?</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="tareaform">
+                    <div class="mb-3">
+                      <label for="nombreActividad" class="form-label">Nombre de la actividad</label>
+                      <input type="text" class="form-control" id="modal-agregar-nombreActividad">
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md">
+                        <label for="materia" class="form-label">Materia</label>
+                        <select id="modal-agregar-opcionesMateria" class="form-select">
+                          <option>Lenguajes Formales</option>
+                          <option>Desarrollo de Apps y Servicios Web</option>
+                          <option>Interculturalidad</option>
+                          <option>Técnicas de Integración de Código</option>
+                          <option>Estrategias Algorítmicas</option>
+                          <option>Teatro Musical</option>
+                        </select>
                       </div>
                     </div>
-                  </div>
+                    <div class="form-group">
+                      <div class="col-md">
+                        <label for="categoria" class="form-label">Categoría</label>
+                        <select class="form-select" id="modal-agregar-categoria">
+                          <option>Tarea</option>
+                          <option>Examen</option>
+                          <option>Práctica</option>
+                          <option>Proyecto</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md">
+                        <label for="fechaEntrega" class="form-label">Fecha de entrega</label>
+                        <input type="date" class="form-control" id="modal-agregar-fechaEntrega">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md">
+                        <label for="detallesExtra" class="form-label">Detalles extra</label>
+                        <textarea class="form-control" id="modal-agregar-detallesExtra" rows="3"></textarea>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer justify-content-start">
+                  <button id="guardarTareaBtn" type="button" class="btn btn-success"
+                    onclick="agregarTarea()">Guardar</button>
+                  <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="modal">Cerrar</button>
                 </div>
               </div>
-              
-              
             </div>
-            <!-- / Content -->
-            <div class="content-backdrop fade"></div>
           </div>
-          <!-- Content wrapper -->
+          <!-- /Modal para agregar tarea -->
+
+          <!-- Modal para editar tarea -->
+          <div class="modal fade" id="modalEditarTarea" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Edita tu tarea</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                      <label for="nombreActividad">Nombre de la actividad</label>
+                      <input type="text" class="form-control" id="nombreActividad">
+                    </div>
+                    <div class="form-group">
+                      <label for="materia">Materia</label>
+                      <select class="form-control" id="opcionesMateria">
+                        <option>Lenguajes Formales</option>
+                        <option>Desarrollo de Aplicaciones y Servicios Web</option>
+                        <option>Organización y Arquitectura de Computadoras</option>
+                        <option>Técnicas de Integración de Código</option>
+                        <option>Estrategias Algorítmicas</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="categoria">Categoria</label>
+                      <select class="form-control" id="categoria">
+                        <option>Tarea</option>
+                        <option>Examen</option>
+                        <option>Practica</option>
+                        <option>Proyecto</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="fechaEntrega">Fecha de entrega</label>
+                      <input type="date" class="form-control" id="fechaEntrega">
+                    </div>
+                    <div class="form-group">
+                      <label for="detallesExtra">Detalles extra</label>
+                      <textarea class="form-control" id="detallesExtra" rows="3"></textarea>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer justify-content-start">
+                  <button type="button" class="btn btn-success" data-bs-dismiss="modal">Actualizar</button>
+                  <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /Modal para editar tarea -->
         </div>
-        <!-- / Layout page -->
+        <!-- /Content wrapper -->
+
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
       </div>
-
-      <!-- Overlay -->
-      <div class="layout-overlay layout-menu-toggle"></div>
+      <!-- /Layout container -->
     </div>
+  </div>
 
-    <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="../assets/vendor/libs/popper/popper.js"></script>
-    <script src="../assets/vendor/js/bootstrap.js"></script>
-    <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    
+  <!-- Core JS -->
+  <script src="../assets/vendor/libs/jquery/jquery.js"></script>
+  <script src="../assets/vendor/libs/popper/popper.js"></script>
+  <script src="../assets/vendor/js/bootstrap.js"></script>
+  <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+  <script src="../assets/vendor/js/menu.js"></script>
 
-    <script src="../assets/vendor/js/menu.js"></script>
-    <!-- endbuild -->
+  <!-- Main JS -->
+  <script src="../assets/js/main.js"></script>
+  <script src="../functions/hmws.js"></script>
 
-    <!-- Vendors JS -->
+  <!-- Page JS -->
+  </script>
+</body>
 
-    <!-- Main JS -->
-    <script src="../assets/js/main.js"></script>
-    <script src="../functions/hmws.js"></script>
-
-    <!-- Page JS -->
-
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-  </body>
 </html>
