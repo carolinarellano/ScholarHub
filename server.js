@@ -6,7 +6,6 @@ const path = require('path');
 const app = express();
 const usuariosRoutes = require('./routes/usuarios');
 const materiasRoutes = require('./routes/materias');
-const horarioRoutes = require('./routes/horario');
 const tareasRoutes = require('./routes/tareas');
 const port = 3000;
 
@@ -23,7 +22,6 @@ app.use('/functions', express.static(path.join(__dirname, 'functions')));
 //Routes
 app.use(usuariosRoutes);
 app.use(materiasRoutes);
-app.use(horarioRoutes);
 app.use(tareasRoutes);
 
 app.get('/', (req, res) => {

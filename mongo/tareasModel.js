@@ -5,7 +5,11 @@ const tareaSchema = new Schema({
         type: String,
         required: true
     },
-    descripcion: {
+    materia: {
+        type: String,
+        required: true
+    },
+    categoria: {
         type: String,
         required: true
     },
@@ -13,11 +17,7 @@ const tareaSchema = new Schema({
         type: Date,
         required: true
     },
-    materia: {
-        type: String,
-        required: true
-    },
-    categoria: {
+    descripcion: {
         type: String,
         required: true
     }

@@ -8,6 +8,7 @@ router.route('/tareas')
     .get(async (req, res) => {
         try {
             const tarea = await tareasModel.find({});
+            console.log(tarea);
             res.status(200).json(tarea);
         } catch (error) {
             res.status(500).send("No se puede acceder a la tarea solicitada");

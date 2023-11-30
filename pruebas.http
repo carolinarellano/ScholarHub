@@ -18,15 +18,33 @@ POST http://localhost:3000/horario
 Content-Type: application/json
 
 {
-    "nombre": "Estrategias Algorítmicas",
-    "profesor": "Luis Gatica",
+    "nombre": "Desarrollo de Aplicaciones y Servicios Web",
+    "profesor": "Ulises Tejeda",
     "creditos": 8,
-    "rubros": [{"Examenes": 40}, {"Tareas": 60}],
+    "rubros": [{"Practicas": 30}, {"Tareas": 25}, {"Proyecto": 45}],
     "periodo": "Primavera 2024",
-    "horario": [{"Lunes": 9}, {"Miercoles": 9}]
+    "horario": [{"Martes": 11}, {"Jueves": 11}]
+}
+###
+
+###
+POST http://localhost:3000/tareas 
+Content-Type: application/json
+
+{
+    "nombre": "Proyecto Final",
+    "materia": "Desarrollo de Aplicaciones y Servicios Web",
+    "categoria": "Proyecto",
+    // fecha de entrega como tipo date
+    "fechaEntrega": "2021-05-20",
+    "descripcion": "Desarrollar una aplicación web con NodeJS y MongoDB"
 }
 ###
 
 ###
 GET http://localhost:3000/horario
+###
+
+###
+GET http://localhost:3000/tareas
 ###
