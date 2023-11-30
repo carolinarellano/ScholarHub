@@ -86,3 +86,26 @@ function crearModalActividad(id, nombreActividad, materiaSeleccionada, categoria
     return nuevaTarea;
 }
 
+function editarTarea() {
+    let nombreActividad = nombreActividad.value;
+    let opcionesMateria = opcionesMateria.options[opcionesMateriaInput.selectedIndex]?.value;
+    let opcionesCategoria = opcionesCategoria.value;
+    let fechaEntrega = fechaEntrega.value;
+    let detallesExtra = detallesExtra.value;
+
+    if (nombreActividad === '' || opcionesMateria === null || opcionesCategoria === '' || fechaEntrega === '' || detallesExtra === '') {
+        alert('Todos los campos son obligatorios');
+        return;
+    }
+
+    const cardActividadId = obtenerCardIdDinamico(nombreActividad);
+    crearModalActividad(cardActividadId, nombreActividad, opcionesMateria, opcionesCategoria, fechaEntrega, detallesExtra, badgeColor);
+    if (cardActividadId === null) {
+        alert('No se ha encontrado la tarea');
+        return;
+    }
+
+    // Cierra el modal después de agregar la tarea
+    const modalEditarTarea = new bootstrap.Modal(document.getElementById('modalEditarTarea'));
+    modalEditarTarea.hide();
+}

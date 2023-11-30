@@ -39,7 +39,8 @@ function cargarMateriasAlmacenadas() {
             }
         });
 
-        cargarMateriasEnSelect();
+        cargarMateriasEnSelectHorario();
+        cargarMateriasEnSelectActividad();
     }
 }
 
@@ -68,7 +69,7 @@ function crearPill(nombre, pillId, creditos, profesor, color) {
 }
 
 function obtenerModalIdDinamico(nombre) {
-    return `modal-${nombre.replace(/\s+/g, '-').toLowerCase()}`;
+    return `materia-${nombre.replace(/\s+/g, '-').toLowerCase()}`;
 }
 
 function guardarNombreMateria(button) {
@@ -113,33 +114,26 @@ function agregarMateria(modalId) {
     };
 
     let materiasList = JSON.parse(sessionStorage.getItem('materiasList')) || {};
-    materiasList[nombre] = materiasList[nombre] || [];
-    materiasList[nombre].push(materiaInfo);
+
+    // Check if the materia already exists in the materiasList object
+    if (materiasList[nombre]) {
+        // If the materia already exists, push the new materiaInfo to the array
+        materiasList[nombre].push(materiaInfo);
+    } else {
+        // If the materia doesn't exist, create a new array with the materiaInfo
+        materiasList[nombre] = [materiaInfo];
+    }
+
     sessionStorage.setItem('materiasList', JSON.stringify(materiasList));
     sessionStorage.setItem('modalId', modalId);
 
-    let modal = document.getElementById(modalId);
+    let modal = document.getElementById('modal1');
     if (!modal) {
         console.error('Modal no encontrado.');
         return;
     }
 
-    // Actualiza el contenido del modal dinámicamente
-    const infoMateria = modal.querySelector('#infoMateria');
-    if (infoMateria) {
-        infoMateria.innerHTML = `
-            <p><strong>Nombre: </strong>${nombre}</p>
-            <p><strong>Periodo: </strong>${periodo}</p>
-            <p><strong>Créditos: </strong>${creditos}</p>
-            <p><strong>Profesor: </strong>${profesor}</p>
-            <!-- Agrega aquí cualquier otra información que desees mostrar -->
-        `;
-    } else {
-        console.error('Elemento de información de materia no encontrado.');
-    }
-
-    var modalInstance = new bootstrap.Modal(document.getElementById(modalId));
-    modalInstance.show();
+    console.log("Se accedio al modal1")
 
     if (!nombre || !periodo || !creditos) {
         alert("Por favor, complete todos los campos antes de guardar.");
@@ -150,52 +144,18 @@ function agregarMateria(modalId) {
     const nuevoRubroBtn = document.getElementById('nuevoRubrobtn');
     nuevoRubro(nuevoRubroBtn);
 
-    agregarRubrosDesdeLocalStorage(modalId);
-    cargarMateriasEnSelect();
+    crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId);
+    cargarMateriasEnSelectHorario();
+    cargarMateriasEnSelectActividad();
 }
+
+
 
 
 // Nueva función para obtener los rubros desde sessionStorage
 function obtenerRubrosDesdeLocalStorage(modalId) {
     const rubrosMaterias = JSON.parse(sessionStorage.getItem('rubrosMaterias')) || {};
     return rubrosMaterias[modalId] || [];
-}
-
-function crearModal(nombre, modalId, profesor) {
-    const modal = document.createElement('div');
-    modal.id = modalId;
-    modal.className = 'modal fade';
-    modal.tabIndex = "-1";
-    modal.ariaHidden = "true";
-    modal.setAttribute("aria-labelledby", "exampleModalLabel");
-    modal.setAttribute("aria-hidden", "true");
-
-    modal.innerHTML = `
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="${modalId}">${nombre}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body"></div>
-                <div class="modal-footer justify-content-start">
-                    <p><strong>Profesor: </strong>${profesor}</p><br>
-                    <button class="btn btn-warning-outline float-right" data-bs-toggle="modal" data-bs-target="#editarMateria" onclick=abrirModalEdicion()>
-                    <i class='bx bx-edit'></i> Editar
-                    </button>
-                    <button class="btn btn-danger-outline float-right btn-eliminar-materia" onclick=eliminarMateria(this)>
-                        <i class="bx bx-trash"></i> Eliminar
-                    </button>
-                    <button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="modal">Cerrar</button>
-                </div>
-        </div>
-     </div>
-    `;
-
-    const modalMaterias = document.getElementById('modal-materias');
-    modalMaterias.append(modal);
-
-    return modal;
 }
 
 function crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId) {
@@ -217,6 +177,9 @@ function crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId) {
     `;
 
     document.getElementById('container-materias').appendChild(nuevaMateria);
+
+    agregarRubrosDesdeLocalStorage(modalId);
+
     return nuevaMateria;
 }
 
@@ -246,28 +209,43 @@ function agregarRubrosDesdeLocalStorage(modalId) {
 
     const modal = document.getElementById('modal1');
 
-    if (modal) {
-        const modalRubros = modal.querySelector('.modal-body');
-
-        if (modalRubros) {
-            modalRubros.innerHTML = '';
-
-            rubrosArray.forEach(rubro => {
-                const pElement = document.createElement('p');
-                const rubroText = rubro.rubro ? `<strong>${rubro.rubro}: </strong>` : 'no agregado';
-                const valorText = rubro.valor ? `${rubro.valor}%<br>` : 'no agregado';
-                pElement.innerHTML = `${rubroText}${valorText}`;
-                modalRubros.appendChild(pElement);
-            });
-        } else {
-            console.error('Rubros container not found.');
-        }
-    } else {
+    if (!modal) {
         console.error('Modal not found.');
+        return;
     }
+
+    const modalRubros = modal.querySelector('.modal-body');
+
+    if (!modalRubros) {
+        console.error('Rubros container not found.');
+        return;
+    }
+
+    limpiarContenido(modalRubros);
+
+    rubrosArray.forEach(rubro => {
+        console.log("agregando rubro ", rubro);
+        const pElement = crearElementoRubro(rubro);
+        modalRubros.appendChild(pElement);
+        console.log("Se agrego: ", rubro)
+    });
+
 }
 
-function cargarMateriasEnSelect() {
+function limpiarContenido(contenedor) {
+    contenedor.innerHTML = '';
+}
+
+function crearElementoRubro(rubro) {
+    const pElement = document.createElement('p');
+    const rubroText = rubro.rubro ? `<strong>${rubro.rubro}: </strong>` : 'no agregado';
+    const valorText = rubro.valor ? `${rubro.valor}%<br>` : 'no agregado';
+    pElement.innerHTML = `${rubroText}${valorText}`;
+    return pElement;
+}
+
+
+function cargarMateriasEnSelectHorario() {
     const selectMaterias = document.getElementById('defaultSelectMaterias');
     selectMaterias.innerHTML = '';
 
@@ -279,9 +257,106 @@ function cargarMateriasEnSelect() {
     if (materiasList) {
         Object.keys(materiasList).forEach(nombre => {
             const option = document.createElement('option');
-            option.value = `${nombre.replace(/\s+/g, '-').toLowerCase()}`;
+            option.value = nombre;
             option.text = nombre;
             selectMaterias.add(option);
         });
     }
+}
+
+function cargarMateriasEnSelectActividad() {
+    const selectMaterias = document.getElementById('opcionesMateriaActividad');
+    selectMaterias.innerHTML = '';
+
+    const opcionPredeterminada = document.createElement('option');
+    opcionPredeterminada.text = 'Selecciona la materia';
+    selectMaterias.add(opcionPredeterminada);
+
+    const materiasList = JSON.parse(sessionStorage.getItem('materiasList'));
+    if (materiasList) {
+        Object.keys(materiasList).forEach(nombre => {
+            const option = document.createElement('option');
+            option.value = nombre;
+            option.text = nombre;
+            selectMaterias.add(option);
+        });
+    }
+
+    const selectEditarMaterias = document.getElementById('opcionesMateriaEditarActividad');
+    selectEditarMaterias.innerHTML = '';
+
+    const opcionPredeterminadaEditar = document.createElement('option');
+    opcionPredeterminadaEditar.text = 'Selecciona la materia';
+    selectEditarMaterias.add(opcionPredeterminadaEditar);
+
+    if (materiasList) {
+        Object.keys(materiasList).forEach(nombre => {
+            const option = document.createElement('option');
+            option.value = nombre;
+            option.text = nombre;
+            selectEditarMaterias.add(option);
+        });
+    }
+}
+
+function cargarMateriasEnHorario() {
+    const selectedMateria = document.getElementById('defaultSelectMaterias').value;
+    console.log(selectedMateria);
+    const selectedHora = document.getElementById('defaultSelectHora').value;
+    let materiasList = JSON.parse(sessionStorage.getItem('materiasList')) || {};
+
+    const selectedMateriaData = materiasList[selectedMateria];
+
+    if (selectedMateriaData && selectedMateriaData.length > 0) {
+        const materiaData = selectedMateriaData[0];
+
+        console.log('Modal ID:', materiaData.modalId);
+        console.log('Nombre:', materiaData.nombre);
+        console.log('Profesor:', materiaData.profesor);
+        console.log('Color Button:', materiaData.colorBtn);
+        console.log('Rubros:', materiaData.rubros);
+    } else {
+        console.error('No data found for the selected materia.');
+    }
+
+    const pillId = `pill-${selectedMateria.replace(/\s+/g, '-').toLowerCase()}`;
+    const materiaData = materiasList[selectedMateria][0];
+
+    console.log(pillId);
+    console.log(materiaData);
+
+    const selectedDias = [];
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    checkboxes.forEach(checkbox => {
+        selectedDias.push(checkbox.value);
+    });
+
+    console.log(selectedDias);
+
+    selectedDias.forEach(dia => {
+        console.log(`${dia}`);
+        const idPillHorario = 'horario-' + `${dia}-` + `${selectedHora}`;
+        console.log(idPillHorario);
+        const cellToAdd = document.getElementById(`${idPillHorario}`);
+        const materiaHorario = document.createElement('div');
+        materiaHorario.className += " materia-button";
+        materiaHorario.id = pillId;
+        materiaHorario.innerHTML = `
+            <span class="materia-button-info">
+                Créditos: ${materiaData.creditos}<br>
+                Profesor: ${materiaData.profesor}
+            </span>
+            <span>
+                <a href="#" class="btn btn-sm rounded-pill btn-${materiaData.colorBtn}">
+                    ${materiaData.nombre}
+                </a>
+            </span>`;
+
+        if (cellToAdd) {
+            cellToAdd.appendChild(materiaHorario);
+        } else {
+            console.error('Container de pills de materias no encontrado.');
+        }
+    });
+
 }
