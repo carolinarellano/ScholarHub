@@ -1,12 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
     cargarMateriasAlmacenadas();
+    cargarMateriasEnHorario();
 
     var guardarMateriaBtn = document.getElementById('guardarMateriaBtn');
+
     guardarMateriaBtn.addEventListener('click', function (event) {
         event.preventDefault();
         const nombreMateria = document.getElementById('nombreMateria').value;
         const modalId = 'modal1';
         agregarMateria(modalId);
+        cargarMateriasEnHorario();
     });
 });
 
@@ -31,16 +34,43 @@ function cargarMateriasAlmacenadas() {
 
             try {
                 let tarjetaMateria = crearTarjetaMateria(nombre, periodo, creditos, color, modalId);
-
                 let container = document.getElementById('container-materias');
                 container.append(tarjetaMateria);
+                cargarMateriasEnHorario();
             } catch (error) {
                 console.error('Error al crear la tarjeta de materia:', error);
             }
         });
 
+        let horarioMaterias = JSON.parse(sessionStorage.getItem('horarioMaterias')) || {};
+        Object.keys(horarioMaterias).forEach(idPillHorario => {
+            const { pillId, materiaData } = horarioMaterias[idPillHorario];
+            const cellToAdd = document.getElementById(idPillHorario);
+
+            if (cellToAdd) {
+                const materiaHorario = document.createElement('div');
+                materiaHorario.className += " materia-button";
+                materiaHorario.id = pillId;
+                materiaHorario.innerHTML = `
+                    <span class="materia-button-info">
+                        Créditos: ${materiaData.creditos}<br>
+                        Profesor: ${materiaData.profesor}
+                    </span>
+                    <span>
+                        <a href="#" class="btn btn-sm rounded-pill btn-${materiaData.colorBtn}">
+                            ${materiaData.nombre}
+                        </a>
+                    </span>`;
+                cellToAdd.appendChild(materiaHorario);
+            } else {
+                console.error('Container de pills de materias no encontrado para la información almacenada.');
+            }
+        });
+
+
         cargarMateriasEnSelectHorario();
         cargarMateriasEnSelectActividad();
+        cargarMateriasEnHorario();
     }
 }
 
@@ -147,8 +177,8 @@ function agregarMateria(modalId) {
     crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId);
     cargarMateriasEnSelectHorario();
     cargarMateriasEnSelectActividad();
+    // cargarMateriasEnHorario();
 }
-
 
 
 
@@ -179,6 +209,7 @@ function crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId) {
     document.getElementById('container-materias').appendChild(nuevaMateria);
 
     agregarRubrosDesdeLocalStorage(modalId);
+    cargarMateriasEnHorario();
 
     return nuevaMateria;
 }
@@ -301,9 +332,9 @@ function cargarMateriasEnSelectActividad() {
 
 function cargarMateriasEnHorario() {
     const selectedMateria = document.getElementById('defaultSelectMaterias').value;
-    console.log(selectedMateria);
     const selectedHora = document.getElementById('defaultSelectHora').value;
     let materiasList = JSON.parse(sessionStorage.getItem('materiasList')) || {};
+    let horarioMaterias = JSON.parse(sessionStorage.getItem('horarioMaterias')) || {};
 
     const selectedMateriaData = materiasList[selectedMateria];
 
@@ -315,48 +346,57 @@ function cargarMateriasEnHorario() {
         console.log('Profesor:', materiaData.profesor);
         console.log('Color Button:', materiaData.colorBtn);
         console.log('Rubros:', materiaData.rubros);
+
+        const pillId = `pill-${selectedMateria.replace(/\s+/g, '-').toLowerCase()}`;
+
+        const selectedDias = [];
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        checkboxes.forEach(checkbox => {
+            selectedDias.push(checkbox.value);
+        });
+
+        console.log(selectedDias);
+
+        selectedDias.forEach(dia => {
+            console.log(`${dia}`);
+            const idPillHorario = 'horario-' + `${dia}-` + `${selectedHora}`;
+            console.log(idPillHorario);
+            const cellToAdd = document.getElementById(`${idPillHorario}`);
+            const materiaHorario = document.createElement('div');
+            materiaHorario.className += " materia-button";
+            materiaHorario.id = pillId;
+            materiaHorario.innerHTML = `
+                <span class="materia-button-info">
+                    Créditos: ${materiaData.creditos}<br>
+                    Profesor: ${materiaData.profesor}
+                </span>
+                <span>
+                    <a href="#" class="btn btn-sm rounded-pill btn-${materiaData.colorBtn}">
+                        ${materiaData.nombre}
+                    </a>
+                </span>`;
+
+            if (cellToAdd) {
+                cellToAdd.innerHTML = '';
+            } else {
+                console.error('Container de pills de materias no encontrado para la información almacenada.');
+            }
+
+            if (cellToAdd) {
+                cellToAdd.appendChild(materiaHorario);
+
+                horarioMaterias[idPillHorario] = {
+                    pillId: pillId,
+                    materiaData: materiaData,
+                };
+                sessionStorage.setItem('horarioMaterias', JSON.stringify(horarioMaterias));
+            } else {
+                console.error('Container de pills de materias no encontrado.');
+            }
+        });
+
     } else {
-        console.error('No data found for the selected materia.');
+        console.error('No se encontraron datos para la materia seleccionada.');
     }
-
-    const pillId = `pill-${selectedMateria.replace(/\s+/g, '-').toLowerCase()}`;
-    const materiaData = materiasList[selectedMateria][0];
-
-    console.log(pillId);
-    console.log(materiaData);
-
-    const selectedDias = [];
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-    checkboxes.forEach(checkbox => {
-        selectedDias.push(checkbox.value);
-    });
-
-    console.log(selectedDias);
-
-    selectedDias.forEach(dia => {
-        console.log(`${dia}`);
-        const idPillHorario = 'horario-' + `${dia}-` + `${selectedHora}`;
-        console.log(idPillHorario);
-        const cellToAdd = document.getElementById(`${idPillHorario}`);
-        const materiaHorario = document.createElement('div');
-        materiaHorario.className += " materia-button";
-        materiaHorario.id = pillId;
-        materiaHorario.innerHTML = `
-            <span class="materia-button-info">
-                Créditos: ${materiaData.creditos}<br>
-                Profesor: ${materiaData.profesor}
-            </span>
-            <span>
-                <a href="#" class="btn btn-sm rounded-pill btn-${materiaData.colorBtn}">
-                    ${materiaData.nombre}
-                </a>
-            </span>`;
-
-        if (cellToAdd) {
-            cellToAdd.appendChild(materiaHorario);
-        } else {
-            console.error('Container de pills de materias no encontrado.');
-        }
-    });
-
 }
+
