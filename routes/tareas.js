@@ -31,18 +31,26 @@ router.route('/tareas')
             });
     });
 
-router.route('tareas/:id')
-    .put((req, res) => {
+router.route('/tareas/:_id')
+    .get(async (req, res) => {
         try {
-            tareasModel.findByIdAndUpdate(req.params.id, req.body);
+            const tarea = await tareasModel.findById(req.params._id);
+            res.status(200).json(tarea);
+        } catch (error) {
+            return res.status(404).send("Tarea no encontrada");
+        }
+    })
+    .put(async (req, res) => {
+        try {
+            await tareasModel.findByIdAndUpdate(req.params._id, req.body);
             res.status(200).send("Se ha actualizado la tarea correctamente");
         } catch (error) {
             return res.status(404).send("Tarea no encontrada");
         }
     })
-    .delete((req, res) => {
+    .delete(async (req, res) => {
         try {
-            tareasModel.findByIdAndDelete(req.params.id);
+            await tareasModel.findByIdAndDelete(req.params._id);
             res.status(200).send("Se ha eliminado la tarea correctamente");
         } catch (error) {
             return res.status(404).send("Tarea no encontrada");

@@ -42,9 +42,27 @@ Content-Type: application/json
 ###
 
 ###
-GET http://localhost:3000/horario
+GET http://localhost:3000/tareas
 ###
 
 ###
-GET http://localhost:3000/tareas
+PUT http://localhost:3000/tareas/656818a241a54db3692d65a2
+Content-Type: application/json
+
+{
+    "nombre": "probando",
+    "materia": "probando",
+    "categoria": "Proyecto",
+    // fecha de entrega como tipo date
+    "fechaEntrega": "2021-05-20",
+    "descripcion": "probando"
+}
+###
+
+###
+GET http://localhost:3000/tareas/656818a241a54db3692d65a2
+###
+
+###
+DELETE http://localhost:3000/tareas/656818a241a54db3692d65a2
 ###

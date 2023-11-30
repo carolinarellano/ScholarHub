@@ -4,22 +4,24 @@ const router = express.Router();
 const materiaModel = require('../mongo/materiasModel');
 
 router.route('/horario')
-    .get((req, res) => {
+    .get(async (req, res) => {
         try {
-            const materia = materiaModel.find();
-            console.log(materia);
+            const materia = await materiaModel.find();
             res.status(200).json(materia);
         } catch (error) {
+            console.log(error);
             res.status(500).send("No se puede obtener la materia solicitada");
         }
     })
-    .post((req, res) => {
+    .post( async (req, res) => {
         try {
+            console.log(req.body);
             const materia = new materiaModel(req.body);
-            console.log(materia);
-            materia.save();
+            await materia.save();
+            res.status(201).json(materia); 
         }
         catch (error) {
+            console.log(error);
             res.status(500).send("No se puede crear la materia")
         }
     });

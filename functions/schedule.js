@@ -177,9 +177,7 @@ function agregarMateria(modalId) {
     crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId);
     cargarMateriasEnSelectHorario();
     cargarMateriasEnSelectActividad();
-    // cargarMateriasEnHorario();
 }
-
 
 
 // Nueva función para obtener los rubros desde sessionStorage
