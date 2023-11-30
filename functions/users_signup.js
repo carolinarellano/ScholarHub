@@ -1,5 +1,4 @@
 document.getElementById('formAuthenticationReg').addEventListener('submit', function (event) {
-    console.log("default event preventer");
     event.preventDefault(); // Prevent the default form submission
     registro(); // Call your signup function
 });
