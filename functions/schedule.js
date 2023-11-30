@@ -120,7 +120,7 @@ function obtenerColorAleatorio() {
 }
 
 
-async function agregarMateria(modalId) {
+function agregarMateria(modalId) {
     const btnColor = obtenerColorAleatorio();
 
     const nombreInput = document.getElementById('nombreMateria');
@@ -177,27 +177,6 @@ async function agregarMateria(modalId) {
     crearTarjetaMateria(nombre, periodo, creditos, btnColor, modalId);
     cargarMateriasEnSelectHorario();
     cargarMateriasEnSelectActividad();
-
-    const materia = {
-        nombre: nombre,
-        periodo: periodo,
-        creditos: creditos,
-        profesor: profesor,
-        rubros: obtenerRubrosDesdeLocalStorage(modalId),
-    }
-
-    // Send a POST request to the server
-    const response = await fetch('http://localhost:3000/horario', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(materia)
-    });
-
-    if (!response.ok) {
-        console.error('Error al agregar materia:', response.statusText);
-    }
     // cargarMateriasEnHorario();
 }
 
